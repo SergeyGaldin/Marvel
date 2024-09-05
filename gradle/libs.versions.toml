@@ -26,7 +26,8 @@ hilt = "2.51.1"
 
 # GOOGLE
 gson = "2.11.0"
-uiTextGoogleFonts = "1.7.0"
+uiTextGoogleFontsVersion = "1.7.0"
+systemUIControllerVersion = "0.27.0"
 
 # TEST
 junit = "4.13.2"
@@ -55,7 +56,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 
 # GOOGLE
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
-androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFontsVersion" }
+google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "systemUIControllerVersion" }
 
 # NETWORK
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }

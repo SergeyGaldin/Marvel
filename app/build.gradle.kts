@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.google.accompanist.systemuicontroller)
     implementation(libs.gson)
 
     implementation(libs.room.runtime)
