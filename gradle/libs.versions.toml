@@ -1,26 +1,32 @@
 [versions]
+#ANDROID
 agp = "8.5.2"
-
 android-compileSdk = "35"
 android-minSdk = "26"
 android-targetSdk = "35"
 kotlinCompiler = "1.5.15"
 
+# KOTLIN
 kotlin = "1.9.25"
 ksp = "1.9.25-1.0.20"
 coreKtx = "1.13.1"
-
 lifecycleRuntimeKtx = "2.8.4"
+
+# COMPOSE
 lifecycleViewmodelCompose = "2.8.4"
 activityCompose = "1.9.1"
 androidx-navigation = "2.8.0"
 composeBom = "2024.09.00"
 
+# COMMON
 retrofit = "2.11.0"
 okhttp = "4.12.0"
-gson = "2.11.0"
 room = "2.6.1"
 hilt = "2.51.1"
+
+# GOOGLE
+gson = "2.11.0"
+uiTextGoogleFonts = "1.7.0"
 
 # TEST
 junit = "4.13.2"
@@ -49,6 +55,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 
 # GOOGLE
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 
 # NETWORK
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }

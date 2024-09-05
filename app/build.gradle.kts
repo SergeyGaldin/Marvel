@@ -74,6 +74,8 @@ dependencies {
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+
+    implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.gson)
 
     implementation(libs.room.runtime)
