@@ -1,4 +1,4 @@
-package com.gateway.marvel.ui.characters
+package com.gateway.marvel.feature_characters
 
 import androidx.compose.runtime.Composable
 

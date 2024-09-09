@@ -1,4 +1,4 @@
-package com.gateway.marvel.ui.settings
+package com.gateway.marvel.feature_settings
 
 import androidx.compose.runtime.Composable
 

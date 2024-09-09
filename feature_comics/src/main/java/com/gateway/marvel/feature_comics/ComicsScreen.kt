@@ -1,4 +1,4 @@
-package com.gateway.marvel.ui.comics
+package com.gateway.marvel.feature_comics
 
 import androidx.compose.runtime.Composable
 
