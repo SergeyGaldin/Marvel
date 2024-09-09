@@ -1,16 +1,19 @@
 [versions]
+#ANDROID
+compileSdk = "35"
+minSdk = "26"
+targetSdk = "35"
+kotlinCompiler = "1.5.15"
+applicationId = "com.gateway.marvel"
+versionCode = "1"
+versionName = "1.0.0"
+jvmTarget = "17"
 
 # GRADLE
 agp = "8.5.2"
 kotlinGradlePlugin = "1.9.25"
 kspGradlePlugin = "1.9.25-1.0.20"
 hiltAndroidGradlePlugin = "2.52"
-
-#ANDROID
-compileSdk = "35"
-minSdk = "26"
-targetSdk = "35"
-kotlinCompiler = "1.5.15"
 
 # KOTLIN
 coreKtx = "1.13.1"

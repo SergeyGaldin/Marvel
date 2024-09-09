@@ -5,6 +5,11 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+libraryConfig {
+    namespace = "feature_characters"
+    moduleUsesCompose = true
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

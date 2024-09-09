@@ -15,17 +15,17 @@ class ApplicationConfigPlugin : Plugin<Project> {
             val androidExtension = project.extensions.findByName("android") as BaseAppModuleExtension
 
             androidExtension.apply {
-                namespace = "com.gateway.marvel"
+                namespace = versionCatalog.findVersion("applicationId").get().toString()
                 compileSdk = versionCatalog.findVersion("compileSdk").get().toString().toInt()
 
                 defaultConfig {
-                    applicationId = "com.gateway.marvel"
+                    applicationId = versionCatalog.findVersion("applicationId").get().toString()
 
                     minSdk = versionCatalog.findVersion("minSdk").get().toString().toInt()
                     targetSdk = versionCatalog.findVersion("targetSdk").get().toString().toInt()
 
-                    versionCode = 1
-                    versionName = "1.0"
+                    versionCode = versionCatalog.findVersion("versionCode").get().toString().toInt()
+                    versionName = versionCatalog.findVersion("versionName").get().toString()
 
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                     vectorDrawables.useSupportLibrary = true
@@ -48,16 +48,19 @@ class ApplicationConfigPlugin : Plugin<Project> {
 
                 project.tasks.withType(KotlinCompile::class.java).configureEach {
                     kotlinOptions {
-                        jvmTarget = "17"
+                        jvmTarget = versionCatalog.findVersion("jvmTarget").get().toString()
                     }
                 }
+
                 buildFeatures {
                     compose = true
                     buildConfig = true
                 }
+
                 composeOptions {
                     kotlinCompilerExtensionVersion = versionCatalog.findVersion("kotlinCompiler").get().toString()
                 }
+
                 packaging {
                     resources {
                         excludes += "/META-INF/{AL2.0,LGPL2.1}"
