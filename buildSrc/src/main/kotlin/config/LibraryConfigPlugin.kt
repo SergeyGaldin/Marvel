@@ -1,6 +1,6 @@
 package config
 
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.android.build.gradle.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -8,27 +8,21 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.the
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-class AndroidConfigPlugin : Plugin<Project> {
+class LibraryConfigPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        project.plugins.withId("com.android.application") {
+        project.plugins.withId("com.android.library") {
             val versionCatalog = project.the<VersionCatalogsExtension>().named("libs")
-            val androidExtension = project.extensions.findByName("android") as BaseAppModuleExtension
+            val androidExtension = project.extensions.findByName("android") as LibraryExtension
 
             androidExtension.apply {
-                namespace = "com.gateway.marvel"
+                namespace = "com.gateway.marvel.feature_characters"
                 compileSdk = versionCatalog.findVersion("compileSdk").get().toString().toInt()
 
                 defaultConfig {
-                    applicationId = "com.gateway.marvel"
-
                     minSdk = versionCatalog.findVersion("minSdk").get().toString().toInt()
-                    targetSdk = versionCatalog.findVersion("targetSdk").get().toString().toInt()
-
-                    versionCode = 1
-                    versionName = "1.0"
 
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                    vectorDrawables.useSupportLibrary = true
+                    consumerProguardFiles("consumer-rules.pro")
                 }
 
                 buildTypes {
@@ -51,18 +45,13 @@ class AndroidConfigPlugin : Plugin<Project> {
                         jvmTarget = "17"
                     }
                 }
-                buildFeatures {
-                    compose = true
-                    buildConfig = true
-                }
-                composeOptions {
-                    kotlinCompilerExtensionVersion = versionCatalog.findVersion("kotlinCompiler").get().toString()
-                }
-                packaging {
-                    resources {
-                        excludes += "/META-INF/{AL2.0,LGPL2.1}"
-                    }
-                }
+//                buildFeatures {
+//                    compose = true
+//                    buildConfig = true
+//                }
+//                composeOptions {
+//                    kotlinCompilerExtensionVersion = versionCatalog.findVersion("kotlinCompiler").get().toString()
+//                }
             }
         }
     }

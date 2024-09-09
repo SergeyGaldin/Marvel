@@ -17,9 +17,14 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        register("config.AndroidConfigPlugin") {
-            id = "config.AndroidConfigPlugin"
-            implementationClass = "config.AndroidConfigPlugin"
+        register("config.ApplicationConfigPlugin") {
+            id = "config.ApplicationConfigPlugin"
+            implementationClass = "config.ApplicationConfigPlugin"
+        }
+
+        register("config.LibraryConfigPlugin") {
+            id = "config.LibraryConfigPlugin"
+            implementationClass = "config.LibraryConfigPlugin"
         }
     }
 }
