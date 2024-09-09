@@ -82,6 +82,7 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 
 [plugins]
 #Android
+android-tools-build = { id = "com.android.tools.build", version.ref = "agp" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 com-android-library = { id = "com.android.library", version.ref = "agp" }
 
