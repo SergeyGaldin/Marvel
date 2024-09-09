@@ -3,13 +3,11 @@ plugins {
 }
 
 libraryConfig {
-    namespace = "feature_main"
+    namespace = "ui_kit"
     moduleUsesCompose = true
 }
 
 dependencies {
-    implementation(project(":ui_kit"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -23,6 +21,9 @@ dependencies {
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.google.accompanist.systemuicontroller)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,4 +1,4 @@
-package com.gateway.marvel.ui.main
+package com.gateway.marvel.feature_main
 
 import android.content.res.Configuration
 import androidx.activity.ComponentActivity
@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
-import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SupervisedUserCircle
 import androidx.compose.material.icons.outlined.Book
-import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.SupervisedUserCircle
 import androidx.compose.material3.Icon
@@ -34,7 +32,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.gateway.marvel.ui.theme.MarvelTheme
+import com.gateway.marvel.ui_kit.theme.MarvelTheme
 
 @Preview(name = "Main light theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(name = "Main in dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -52,11 +50,6 @@ data class BottomNavigationItem(
 )
 
 val bottomNavigationItems = listOf(
-    BottomNavigationItem(
-        mainScreenContent = MainScreenContent.Movies,
-        selectedIcon = Icons.Filled.Movie,
-        unselectedIcon = Icons.Outlined.Movie
-    ),
     BottomNavigationItem(
         mainScreenContent = MainScreenContent.Characters,
         selectedIcon = Icons.Filled.SupervisedUserCircle,
@@ -115,7 +108,7 @@ private fun MainContent(
     ) {
         MainContentNavGraph(
             navController = navController,
-            startDestination = MainScreenContent.Movies.route
+            startDestination = MainScreenContent.Characters.route
         )
     }
 }

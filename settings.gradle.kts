@@ -8,5 +8,6 @@ pluginManagement {
 }
 
 include(":app")
-include(":feature_characters")
+include(":ui_kit")
 include(":feature_main")
+include(":feature_characters")

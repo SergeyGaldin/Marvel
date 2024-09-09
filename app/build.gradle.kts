@@ -6,6 +6,8 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":ui_kit"))
+    implementation(project(":feature_main"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

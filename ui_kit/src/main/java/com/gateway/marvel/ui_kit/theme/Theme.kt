@@ -1,4 +1,4 @@
-package com.gateway.marvel.ui.theme
+package com.gateway.marvel.ui_kit.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
