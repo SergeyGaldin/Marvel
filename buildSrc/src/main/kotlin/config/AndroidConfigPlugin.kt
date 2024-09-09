@@ -4,20 +4,26 @@ import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.kotlin.dsl.the
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class AndroidConfigPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.plugins.withId("com.android.application") {
+            val versionCatalog = project.the<VersionCatalogsExtension>().named("libs")
             val androidExtension = project.extensions.findByName("android") as BaseAppModuleExtension
+
             androidExtension.apply {
                 namespace = "com.gateway.marvel"
-                compileSdk = 35
+                compileSdk = versionCatalog.findVersion("compileSdk").get().toString().toInt()
 
                 defaultConfig {
                     applicationId = "com.gateway.marvel"
-                    minSdk = 26
-                    targetSdk = 35
+
+                    minSdk = versionCatalog.findVersion("minSdk").get().toString().toInt()
+                    targetSdk = versionCatalog.findVersion("targetSdk").get().toString().toInt()
+
                     versionCode = 1
                     versionName = "1.0"
 
@@ -50,7 +56,7 @@ class AndroidConfigPlugin : Plugin<Project> {
                     buildConfig = true
                 }
                 composeOptions {
-                    kotlinCompilerExtensionVersion = "1.5.15"
+                    kotlinCompilerExtensionVersion = versionCatalog.findVersion("kotlinCompiler").get().toString()
                 }
                 packaging {
                     resources {
@@ -61,5 +67,3 @@ class AndroidConfigPlugin : Plugin<Project> {
         }
     }
 }
-
-
