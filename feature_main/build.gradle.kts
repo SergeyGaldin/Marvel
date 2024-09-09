@@ -3,7 +3,7 @@ plugins {
 }
 
 libraryConfig {
-    namespace = "feature_characters"
+    namespace = "feature_main"
     moduleUsesCompose = true
 }
 

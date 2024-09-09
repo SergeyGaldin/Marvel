@@ -9,3 +9,4 @@ pluginManagement {
 
 include(":app")
 include(":feature_characters")
+include(":feature_main")
