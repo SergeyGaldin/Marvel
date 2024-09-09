@@ -10,6 +10,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class ApplicationConfigPlugin : Plugin<Project> {
     override fun apply(project: Project) {
+        project.plugins.apply("com.android.application")
+        project.plugins.apply("org.jetbrains.kotlin.android")
+
         project.plugins.withId("com.android.application") {
             val versionCatalog = project.the<VersionCatalogsExtension>().named("libs")
             val androidExtension = project.extensions.findByName("android") as BaseAppModuleExtension

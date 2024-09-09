@@ -1,8 +1,5 @@
 plugins {
     id("config.LibraryConfigPlugin")
-
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
 }
 
 libraryConfig {
@@ -11,7 +8,7 @@ libraryConfig {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
+//    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
