@@ -8,6 +8,7 @@ plugins {
 dependencies {
     implementation(project(":ui_kit"))
     implementation(project(":feature_main"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -28,8 +29,6 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
-    implementation(libs.androidx.ui.text.google.fonts)
-    implementation(libs.google.accompanist.systemuicontroller)
     implementation(libs.gson)
 
     implementation(libs.room.runtime)
@@ -45,6 +44,7 @@ dependencies {
 
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

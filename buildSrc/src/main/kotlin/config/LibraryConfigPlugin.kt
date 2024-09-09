@@ -88,6 +88,16 @@ class LibraryConfigPlugin : Plugin<Project> {
     ) {
         project.dependencies.apply {
             add("implementation", versionCatalog.findLibrary("androidx.core.ktx").get())
+            add("implementation", versionCatalog.findLibrary("androidx.lifecycle.runtime.ktx").get())
+
+            add("implementation", versionCatalog.findLibrary("androidx.activity.compose").get())
+            add("implementation", platform(versionCatalog.findLibrary("androidx.compose.bom").get()))
+            add("implementation", versionCatalog.findLibrary("androidx.ui").get())
+            add("implementation", versionCatalog.findLibrary("androidx.ui.graphics").get())
+            add("implementation", versionCatalog.findLibrary("androidx.ui.tooling.preview").get())
+            add("implementation", versionCatalog.findLibrary("androidx.material3").get())
+            add("implementation", versionCatalog.findLibrary("androidx.compose.material.iconsExtended").get())
+            add("debugImplementation", versionCatalog.findLibrary("androidx.ui.tooling").get())
         }
     }
 }
