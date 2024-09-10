@@ -8,6 +8,9 @@ plugins {
 dependencies {
     implementation(projects.uiKit)
     implementation(projects.featureMain)
+    implementation(projects.featureCharacters)
+    implementation(projects.featureComics)
+    implementation(projects.featureSettings)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -5,9 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.gateway.marvel.ui_kit.theme.MarvelTheme
 
-//import dagger.hilt.android.AndroidEntryPoint
-//
-//@AndroidEntryPoint
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

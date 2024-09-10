@@ -5,6 +5,8 @@ plugins {
 libraryConfig {
     namespace = "feature_characters"
     moduleUsesCompose = true
+    moduleUsesKSP = true
+    moduleUsesHilt = true
 }
 
 dependencies {

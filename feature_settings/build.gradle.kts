@@ -5,6 +5,8 @@ plugins {
 libraryConfig {
     namespace = "feature_settings"
     moduleUsesCompose = true
+    moduleUsesKSP = true
+    moduleUsesHilt = true
 }
 
 dependencies {

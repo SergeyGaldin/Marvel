@@ -85,6 +85,14 @@ class LibraryConfigPlugin : Plugin<Project> {
         if (libraryConfig.moduleUsesCompose) {
             apply("org.jetbrains.kotlin.plugin.compose")
         }
+
+        if (libraryConfig.moduleUsesKSP) {
+            apply("com.google.devtools.ksp")
+        }
+
+        if (libraryConfig.moduleUsesHilt) {
+            apply("dagger.hilt.android.plugin")
+        }
     }
 
     private fun Project.setupDependencies(
@@ -106,12 +114,22 @@ class LibraryConfigPlugin : Plugin<Project> {
             addDependency(versionCatalog, "androidx.ui.tooling.preview")
             addDependencyDebug(versionCatalog, "androidx.ui.tooling")
         }
+
+        if (libraryConfig.moduleUsesHilt) {
+            addDependency(versionCatalog, "hilt.android")
+            addKSPDependency(versionCatalog, "dagger.hilt.android.compiler")
+        }
     }
 
     private fun DependencyHandler.addDependency(
         versionCatalog: VersionCatalog,
         alias: String
     ) = add("implementation", versionCatalog.findLibrary(alias).get())
+
+    private fun DependencyHandler.addKSPDependency(
+        versionCatalog: VersionCatalog,
+        alias: String
+    ) = add("ksp", versionCatalog.findLibrary(alias).get())
 
     private fun DependencyHandler.addPlatformDependency(
         versionCatalog: VersionCatalog,
@@ -127,4 +145,6 @@ class LibraryConfigPlugin : Plugin<Project> {
 open class LibraryConfigExtension {
     var namespace: String = ""
     var moduleUsesCompose: Boolean = false
+    var moduleUsesKSP: Boolean = false
+    var moduleUsesHilt: Boolean = false
 }
