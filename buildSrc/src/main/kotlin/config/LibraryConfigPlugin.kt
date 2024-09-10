@@ -6,6 +6,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.kotlin.dsl.getByName
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -90,21 +91,37 @@ class LibraryConfigPlugin : Plugin<Project> {
         versionCatalog: VersionCatalog,
         libraryConfig: LibraryConfigExtension
     ) = dependencies.apply {
-        add("implementation", versionCatalog.findLibrary("androidx.core.ktx").get())
-        add("implementation", versionCatalog.findLibrary("androidx.lifecycle.runtime.ktx").get())
+        addDependency(versionCatalog, "androidx.core.ktx")
+        addDependency(versionCatalog, "androidx.lifecycle.runtime.ktx")
 
         if (libraryConfig.moduleUsesCompose) {
-            add("implementation", versionCatalog.findLibrary("androidx.activity.compose").get())
-            add("implementation", versionCatalog.findLibrary("androidx.compose.material.iconsExtended").get())
-            add("implementation", platform(versionCatalog.findLibrary("androidx.compose.bom").get()))
-            add("implementation", versionCatalog.findLibrary("androidx.runtime").get())
-            add("implementation", versionCatalog.findLibrary("androidx.ui").get())
-            add("implementation", versionCatalog.findLibrary("androidx.ui.graphics").get())
-            add("implementation", versionCatalog.findLibrary("androidx.ui.tooling.preview").get())
-            add("implementation", versionCatalog.findLibrary("androidx.material3").get())
-            add("debugImplementation", versionCatalog.findLibrary("androidx.ui.tooling").get())
+            addDependency(versionCatalog, "androidx.activity.compose")
+            addDependency(versionCatalog, "androidx.compose.material.iconsExtended")
+            addDependency(versionCatalog, "androidx.material3")
+
+            addPlatformDependency(versionCatalog, "androidx.compose.bom")
+            addDependency(versionCatalog, "androidx.runtime")
+            addDependency(versionCatalog, "androidx.ui")
+            addDependency(versionCatalog, "androidx.ui.graphics")
+            addDependency(versionCatalog, "androidx.ui.tooling.preview")
+            addDependencyDebug(versionCatalog, "androidx.ui.tooling")
         }
     }
+
+    private fun DependencyHandler.addDependency(
+        versionCatalog: VersionCatalog,
+        alias: String
+    ) = add("implementation", versionCatalog.findLibrary(alias).get())
+
+    private fun DependencyHandler.addPlatformDependency(
+        versionCatalog: VersionCatalog,
+        alias: String
+    ) = add("implementation", platform(versionCatalog.findLibrary(alias).get()))
+
+    private fun DependencyHandler.addDependencyDebug(
+        versionCatalog: VersionCatalog,
+        alias: String
+    ) = add("debugImplementation", versionCatalog.findLibrary(alias).get())
 }
 
 open class LibraryConfigExtension {
