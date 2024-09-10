@@ -8,7 +8,7 @@ libraryConfig {
 }
 
 dependencies {
-    implementation(project(":ui_kit"))
+    implementation(projects.uiKit)
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

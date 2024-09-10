@@ -6,27 +6,30 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.the
+import org.gradle.kotlin.dsl.getByName
+import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class ApplicationConfigPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        val versionCatalog = project.the<VersionCatalogsExtension>().named("libs")
+        val versionCatalog = project.extensions.getByType<VersionCatalogsExtension>().named("libs")
 
         project.afterEvaluate {
-            project.plugins.withId("com.android.application") {
-                setupApplicationModule(project, versionCatalog)
+            if (project.isApplicationModule()) {
+                project.configureApplicationModule(versionCatalog)
             }
         }
 
-        setupPluginsIntoApplicationModule(project)
+        project.configurePlugins()
     }
 
-    private fun setupApplicationModule(
-        project: Project,
+    private fun Project.isApplicationModule(): Boolean =
+        plugins.hasPlugin("com.android.application")
+
+    private fun Project.configureApplicationModule(
         versionCatalog: VersionCatalog
-    ) = with(project.extensions.findByName("android") as BaseAppModuleExtension) {
+    ) = with(extensions.getByName<BaseAppModuleExtension>("android")) {
         namespace = versionCatalog.findVersion("applicationId").get().toString()
         compileSdk = versionCatalog.findVersion("compileSdk").get().toString().toInt()
 
@@ -58,7 +61,7 @@ class ApplicationConfigPlugin : Plugin<Project> {
             targetCompatibility = JavaVersion.VERSION_17
         }
 
-        project.tasks.withType(KotlinCompile::class.java).configureEach {
+        tasks.withType(KotlinCompile::class.java).configureEach {
             compilerOptions {
                 jvmTarget.set(JvmTarget.JVM_17)
             }
@@ -75,9 +78,9 @@ class ApplicationConfigPlugin : Plugin<Project> {
         }
     }
 
-    private fun setupPluginsIntoApplicationModule(project: Project) {
-        project.plugins.apply("com.android.application")
-        project.plugins.apply("org.jetbrains.kotlin.android")
-        project.plugins.apply("org.jetbrains.kotlin.plugin.compose")
+    private fun Project.configurePlugins() = with(plugins) {
+        apply("com.android.application")
+        apply("org.jetbrains.kotlin.android")
+        apply("org.jetbrains.kotlin.plugin.compose")
     }
 }

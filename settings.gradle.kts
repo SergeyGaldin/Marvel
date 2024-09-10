@@ -1,5 +1,7 @@
 rootProject.name = "Marvel"
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
