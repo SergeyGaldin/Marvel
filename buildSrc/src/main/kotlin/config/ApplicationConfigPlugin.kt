@@ -7,6 +7,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.the
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class ApplicationConfigPlugin : Plugin<Project> {
@@ -58,18 +59,13 @@ class ApplicationConfigPlugin : Plugin<Project> {
         }
 
         project.tasks.withType(KotlinCompile::class.java).configureEach {
-            kotlinOptions {
-                jvmTarget = versionCatalog.findVersion("jvmTarget").get().toString()
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_17)
             }
         }
 
         buildFeatures {
-            compose = true
             buildConfig = true
-        }
-
-        composeOptions {
-            kotlinCompilerExtensionVersion = versionCatalog.findVersion("kotlinCompiler").get().toString()
         }
 
         packaging {
@@ -82,5 +78,6 @@ class ApplicationConfigPlugin : Plugin<Project> {
     private fun setupPluginsIntoApplicationModule(project: Project) {
         project.plugins.apply("com.android.application")
         project.plugins.apply("org.jetbrains.kotlin.android")
+        project.plugins.apply("org.jetbrains.kotlin.plugin.compose")
     }
 }

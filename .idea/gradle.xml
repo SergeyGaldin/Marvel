@@ -23,6 +23,10 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/feature_characters" />
+            <option value="$PROJECT_DIR$/feature_comics" />
+            <option value="$PROJECT_DIR$/feature_main" />
+            <option value="$PROJECT_DIR$/feature_settings" />
+            <option value="$PROJECT_DIR$/ui_kit" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

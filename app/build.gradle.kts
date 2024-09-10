@@ -11,6 +11,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
 
     implementation(libs.retrofit) { exclude(module = "okhttp") }
     implementation(libs.retrofit2.adapter.rxjava3)

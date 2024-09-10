@@ -6,11 +6,13 @@ plugins {
 repositories {
     gradlePluginPortal()
     google()
+    mavenCentral()
 }
 
 dependencies {
     implementation(libs.gradle)
     implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.compose.gradle.plugin)
     implementation(libs.hilt.android.gradle.plugin)
     implementation(libs.com.google.devtools.ksp.gradle.plugin)
 }

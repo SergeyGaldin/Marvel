@@ -7,6 +7,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.the
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class LibraryConfigPlugin : Plugin<Project> {
@@ -21,10 +22,11 @@ class LibraryConfigPlugin : Plugin<Project> {
             project.plugins.withId("com.android.library") {
                 setupLibraryModule(project, versionCatalog, libraryConfig)
             }
+
+            setupDependenciesIntoLibraryModule(project, versionCatalog, libraryConfig)
         }
 
         setupPluginsIntoLibraryModule(project)
-        setupDependenciesIntoLibraryModule(project, versionCatalog)
     }
 
     private fun setupLibraryModule(
@@ -59,45 +61,41 @@ class LibraryConfigPlugin : Plugin<Project> {
         }
 
         project.tasks.withType(KotlinCompile::class.java).configureEach {
-            kotlinOptions {
-                jvmTarget = versionCatalog.findVersion("jvmTarget").get().toString()
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_17)
             }
         }
 
-        if (libraryConfig.moduleUsesCompose) {
-            buildFeatures {
-                compose = true
-                buildConfig = true
-            }
-
-            composeOptions {
-                kotlinCompilerExtensionVersion = versionCatalog
-                    .findVersion("kotlinCompiler").get().toString()
-            }
+        buildFeatures {
+            buildConfig = true
         }
     }
 
     private fun setupPluginsIntoLibraryModule(project: Project) {
         project.plugins.apply("com.android.library")
         project.plugins.apply("org.jetbrains.kotlin.android")
+        project.plugins.apply("org.jetbrains.kotlin.plugin.compose")
     }
 
     private fun setupDependenciesIntoLibraryModule(
         project: Project,
-        versionCatalog: VersionCatalog
+        versionCatalog: VersionCatalog,
+        libraryConfig: LibraryConfigExtension
     ) {
         project.dependencies.apply {
             add("implementation", versionCatalog.findLibrary("androidx.core.ktx").get())
             add("implementation", versionCatalog.findLibrary("androidx.lifecycle.runtime.ktx").get())
-
-            add("implementation", versionCatalog.findLibrary("androidx.activity.compose").get())
-            add("implementation", platform(versionCatalog.findLibrary("androidx.compose.bom").get()))
-            add("implementation", versionCatalog.findLibrary("androidx.ui").get())
-            add("implementation", versionCatalog.findLibrary("androidx.ui.graphics").get())
-            add("implementation", versionCatalog.findLibrary("androidx.ui.tooling.preview").get())
-            add("implementation", versionCatalog.findLibrary("androidx.material3").get())
-            add("implementation", versionCatalog.findLibrary("androidx.compose.material.iconsExtended").get())
-            add("debugImplementation", versionCatalog.findLibrary("androidx.ui.tooling").get())
+            if(libraryConfig.moduleUsesCompose) {
+                add("implementation", versionCatalog.findLibrary("androidx.activity.compose").get())
+                add("implementation", versionCatalog.findLibrary("androidx.compose.material.iconsExtended").get())
+                add("implementation", platform(versionCatalog.findLibrary("androidx.compose.bom").get()))
+                add("implementation", versionCatalog.findLibrary("androidx.runtime").get())
+                add("implementation", versionCatalog.findLibrary("androidx.ui").get())
+                add("implementation", versionCatalog.findLibrary("androidx.ui.graphics").get())
+                add("implementation", versionCatalog.findLibrary("androidx.ui.tooling.preview").get())
+                add("implementation", versionCatalog.findLibrary("androidx.material3").get())
+                add("debugImplementation", versionCatalog.findLibrary("androidx.ui.tooling").get())
+            }
         }
     }
 }
