@@ -16,16 +16,15 @@
         android:theme="@style/Theme.Marvel"
         tools:targetApi="31">
 
-<!--        <activity-->
-<!--            android:name=".feature_main.MainActivity"-->
-<!--            android:exported="true"-->
-<!--            android:theme="@style/Theme.Marvel">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <activity
+            android:name="com.gateway.marvel.main.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 

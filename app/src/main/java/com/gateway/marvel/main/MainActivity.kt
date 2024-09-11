@@ -1,4 +1,4 @@
-package com.gateway.marvel.feature_main
+package com.gateway.marvel.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
