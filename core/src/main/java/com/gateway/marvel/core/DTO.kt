@@ -1,4 +1,4 @@
-package com.gateway.marvel.first
+package com.gateway.marvel.core
 
 data class MarvelResponse(
     val data: DataContainer

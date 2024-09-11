@@ -11,6 +11,7 @@ pluginManagement {
 
 include(":app")
 include(":core")
+include(":network")
 include(":ui_kit")
 
 include(":feature_characters")

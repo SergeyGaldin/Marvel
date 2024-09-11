@@ -8,6 +8,7 @@ plugins {
 dependencies {
     implementation(projects.core)
     implementation(projects.uiKit)
+    implementation(projects.network)
     implementation(projects.featureCharacters)
     implementation(projects.featureComics)
     implementation(projects.featureSettings)
@@ -21,6 +22,7 @@ dependencies {
     implementation(libs.androidx.compose.material.iconsExtended)
 
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.runtime)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)

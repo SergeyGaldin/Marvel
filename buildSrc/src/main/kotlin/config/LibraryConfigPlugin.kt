@@ -105,14 +105,22 @@ class LibraryConfigPlugin : Plugin<Project> {
         if (libraryConfig.moduleUsesCompose) {
             addDependency(versionCatalog, "androidx.activity.compose")
             addDependency(versionCatalog, "androidx.compose.material.iconsExtended")
-            addDependency(versionCatalog, "androidx.material3")
 
             addPlatformDependency(versionCatalog, "androidx.compose.bom")
             addDependency(versionCatalog, "androidx.runtime")
+            addDependency(versionCatalog, "androidx.material3")
             addDependency(versionCatalog, "androidx.ui")
             addDependency(versionCatalog, "androidx.ui.graphics")
             addDependency(versionCatalog, "androidx.ui.tooling.preview")
             addDependencyDebug(versionCatalog, "androidx.ui.tooling")
+        }
+
+        if (libraryConfig.moduleUsesNetworkApi) {
+            addDependency(versionCatalog, "retrofit")
+            addDependency(versionCatalog, "retrofit2.adapter.rxjava3")
+            addDependency(versionCatalog, "retrofit2.converter.gson")
+            addDependency(versionCatalog, "okhttp")
+            addDependency(versionCatalog, "logging.interceptor")
         }
 
         if (libraryConfig.moduleUsesHilt) {
@@ -145,6 +153,7 @@ class LibraryConfigPlugin : Plugin<Project> {
 open class LibraryConfigExtension {
     var namespace: String = ""
     var moduleUsesCompose: Boolean = false
+    var moduleUsesNetworkApi: Boolean = false
     var moduleUsesKSP: Boolean = false
     var moduleUsesHilt: Boolean = false
 }
