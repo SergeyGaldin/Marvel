@@ -6,6 +6,7 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.core)
     implementation(projects.uiKit)
     implementation(projects.featureMain)
     implementation(projects.featureCharacters)

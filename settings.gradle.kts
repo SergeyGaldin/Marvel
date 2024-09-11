@@ -10,6 +10,7 @@ pluginManagement {
 }
 
 include(":app")
+include(":core")
 include(":ui_kit")
 
 include(":feature_main")
