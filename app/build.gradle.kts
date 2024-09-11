@@ -43,6 +43,7 @@ dependencies {
     ksp(libs.room.compiler)
 
     implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
     ksp(libs.dagger.hilt.android.compiler)
 
     testImplementation(libs.junit)

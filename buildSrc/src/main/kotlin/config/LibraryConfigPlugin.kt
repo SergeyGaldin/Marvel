@@ -125,6 +125,7 @@ class LibraryConfigPlugin : Plugin<Project> {
 
         if (libraryConfig.moduleUsesHilt) {
             addDependency(versionCatalog, "hilt.android")
+            addDependency(versionCatalog, "hilt.navigation.compose")
             addKSPDependency(versionCatalog, "dagger.hilt.android.compiler")
         }
     }
