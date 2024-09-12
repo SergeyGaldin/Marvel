@@ -1,4 +1,4 @@
-package com.gateway.marvel.core
+package com.gateway.marvel.core.dto
 
 data class Character(
     val id: Int,

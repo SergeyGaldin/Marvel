@@ -4,6 +4,7 @@ plugins {
 
 libraryConfig {
     namespace = "repo_characters"
+    moduleUsesNetworkApi = true
     moduleUsesKSP = true
     moduleUsesHilt = true
 }

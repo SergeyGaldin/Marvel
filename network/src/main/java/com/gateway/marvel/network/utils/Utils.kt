@@ -1,28 +1,19 @@
 package com.gateway.marvel.network.utils
 
-import com.gateway.marvel.network.dto.DataContainer
-import com.gateway.marvel.network.dto.MarvelResponse
-import com.gateway.marvel.network.dto.MarvelResponseError
+import com.gateway.marvel.core.dto.MarvelResponse
+import com.gateway.marvel.core.dto.MarvelResponseError
+import com.gateway.marvel.core.dto.ResultResponse
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.io.IOException
-import java.math.BigInteger
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.security.MessageDigest
 import javax.net.ssl.SSLHandshakeException
 
-sealed class ResultResponse<out T> {
-    data class Success<T>(val data: DataContainer<T>?) : ResultResponse<T>()
-    data class Error(val throwable: Throwable?, val errorMsg: String?) : ResultResponse<Nothing>()
-}
-
-suspend fun <T> getDataFromNetwork(
-    execute: suspend () -> Response<MarvelResponse<T>>
+inline fun <reified T> getDataFromNetwork(
+    execute: () -> Response<MarvelResponse<T>>
 ): ResultResponse<T> {
     try {
         val response = execute()
