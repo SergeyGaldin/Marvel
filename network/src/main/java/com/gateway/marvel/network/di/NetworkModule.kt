@@ -1,6 +1,7 @@
 package com.gateway.marvel.network.di
 
 import com.gateway.marvel.network.endpoints.MarvelApi
+import com.gateway.marvel.network.interceptor.AuthInterceptor
 import com.gateway.marvel.network.utils.Constants
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -23,12 +24,20 @@ object NetworkModule {
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS)
 
     @Provides
+    fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor(
+        publicKey = Constants.PUBLIC_KEY,
+        privateKey = Constants.PRIVATE_KEY
+    )
+
+    @Provides
     fun provideOkHttpClientBuilder(
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor
     ): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(5, TimeUnit.SECONDS)
         .readTimeout(20, TimeUnit.SECONDS)
         .retryOnConnectionFailure(true)
+        .addInterceptor(authInterceptor)
         .addInterceptor(httpLoggingInterceptor)
         .build()
 

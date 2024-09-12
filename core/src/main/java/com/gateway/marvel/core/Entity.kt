@@ -1,13 +1,5 @@
 package com.gateway.marvel.core
 
-data class MarvelResponse(
-    val data: DataContainer
-)
-
-data class DataContainer(
-    val results: List<Character>
-)
-
 data class Character(
     val id: Int,
     val name: String,
