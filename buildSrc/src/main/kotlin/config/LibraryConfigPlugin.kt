@@ -104,6 +104,7 @@ class LibraryConfigPlugin : Plugin<Project> {
 
         if (libraryConfig.moduleUsesCompose) {
             addDependency(versionCatalog, "androidx.activity.compose")
+            addDependency(versionCatalog, "coil.compose")
             addDependency(versionCatalog, "androidx.compose.material.iconsExtended")
 
             addPlatformDependency(versionCatalog, "androidx.compose.bom")

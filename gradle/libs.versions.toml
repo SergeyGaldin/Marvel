@@ -21,7 +21,8 @@ lifecycleRuntimeKtx = "2.8.5"
 # COMPOSE
 lifecycleViewmodelCompose = "2.8.5"
 activityCompose = "1.9.2"
-androidx-navigation = "2.8.0"
+androidxNavigation = "2.8.0"
+coilCompose = "2.7.0"
 composeBom = "2024.09.00"
 
 # COMMON
@@ -59,7 +60,8 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 
 # COMPOSE
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-material-iconsExtended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
