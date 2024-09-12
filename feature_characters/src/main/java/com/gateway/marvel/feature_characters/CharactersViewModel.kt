@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 data class CharactersScreenState(
     val characters: List<Character>? = null,
-    override val isRefreshing: Boolean = false,
+    override val isRefreshing: Boolean = true,
     override var errorMessage: String? = null,
     override var throwable: Throwable? = null
 ): ScreenState()
@@ -43,6 +43,13 @@ class CharactersViewModel @Inject constructor(
                 charactersResult is ResultResponse.Error -> charactersResult.throwable
                 else -> null
             }
+        )
+    }
+
+    fun clearError() {
+        _charactersScreenState.value = _charactersScreenState.value.copy(
+            errorMessage = null,
+            throwable = null
         )
     }
 }

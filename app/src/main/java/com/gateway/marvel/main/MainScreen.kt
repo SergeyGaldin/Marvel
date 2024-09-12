@@ -136,7 +136,7 @@ private fun BottomNavBar(
                 },
                 label = {
                     Text(
-                        text = item.mainScreenContent.title,
+                        text = item.mainScreenContent.nameScreen,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold
                     )
@@ -144,7 +144,7 @@ private fun BottomNavBar(
                 icon = {
                     Icon(
                         imageVector = if (currentDestination?.route == item.mainScreenContent.route) item.selectedIcon else item.unselectedIcon,
-                        contentDescription = item.mainScreenContent.title
+                        contentDescription = item.mainScreenContent.nameScreen
                     )
                 }
             )

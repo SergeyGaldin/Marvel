@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gateway.marvel.ui_kit.components.AlertDialogExceptionInfo
+import com.gateway.marvel.ui_kit.components.CenterAlignedTopAppBarBase
+import com.gateway.marvel.ui_kit.components.DataEmptyLayout
 import com.gateway.marvel.ui_kit.components.showToastLong
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -20,8 +22,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharactersRoute(
-    charactersViewModel: CharactersViewModel = hiltViewModel(),
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    nameScreen: String,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    charactersViewModel: CharactersViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
 
@@ -39,7 +42,11 @@ fun CharactersRoute(
     }
 
     Scaffold(
-        topBar = {}
+        topBar = {
+            CenterAlignedTopAppBarBase(
+                title = nameScreen
+            )
+        }
     ) {
         PullToRefreshBox(
             modifier = Modifier
@@ -48,7 +55,11 @@ fun CharactersRoute(
             isRefreshing = isRefreshing,
             onRefresh = onRefresh,
         ) {
-            CharactersScreen(charactersScreenState.characters)
+            if (!charactersScreenState.characters.isNullOrEmpty()) CharactersScreen(
+                characters = charactersScreenState.characters!!
+            ) else if (charactersScreenState.characters.isNullOrEmpty() && !isRefreshing) DataEmptyLayout(
+                onRefresh = onRefresh
+            )
         }
     }
 
@@ -56,11 +67,11 @@ fun CharactersRoute(
         if (errorMessage != null) {
             if (throwable == null) {
                 showToastLong(context, errorMessage)
-                clearError()
+                charactersViewModel.clearError()
             } else AlertDialogExceptionInfo(
                 dialogErrorText = errorMessage,
                 dialogExceptionText = throwable?.message,
-                onDismiss = { clearError() }
+                onDismiss = { charactersViewModel.clearError() }
             )
         }
     }

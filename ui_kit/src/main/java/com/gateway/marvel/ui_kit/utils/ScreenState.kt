@@ -4,9 +4,4 @@ open class ScreenState(
     open val isRefreshing: Boolean = false,
     open var errorMessage: String? = null,
     open var throwable: Throwable? = null
-) {
-    fun clearError() {
-        errorMessage = null
-        throwable = null
-    }
-}
+)

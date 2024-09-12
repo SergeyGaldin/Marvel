@@ -8,11 +8,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.gateway.marvel.core.dto.Character
+import com.gateway.marvel.ui_kit.components.DataEmptyLayout
 
 @Composable
-fun CharactersScreen(characters: List<Character>?) {
-    if (!characters.isNullOrEmpty()) LazyColumn(Modifier.fillMaxSize()) {
-        items(characters) { character ->
+fun CharactersScreen(
+    characters: List<Character>
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+       items(characters) { character ->
             ListItem(
                 headlineContent = {
                     Text(text = character.name)

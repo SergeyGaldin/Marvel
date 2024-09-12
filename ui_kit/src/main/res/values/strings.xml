@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Marvel</string>
+    <string name="characters">Персонажи</string>
+    <string name="comics">Комиксы</string>
+    <string name="settings">Настройки</string>
+
+    <string name="refresh">Обновить</string>
 </resources>
