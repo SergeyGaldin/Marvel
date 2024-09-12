@@ -55,7 +55,7 @@ fun CharactersRoute(
             isRefreshing = isRefreshing,
             onRefresh = onRefresh,
         ) {
-            if (!charactersScreenState.characters.isNullOrEmpty()) CharactersScreen(
+            if (!charactersScreenState.characters.isNullOrEmpty()) CharactersContent(
                 characters = charactersScreenState.characters!!
             ) else if (charactersScreenState.characters.isNullOrEmpty() && !isRefreshing) DataEmptyLayout(
                 onRefresh = onRefresh
