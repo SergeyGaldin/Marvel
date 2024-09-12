@@ -13,7 +13,7 @@ libraryConfig {
 dependencies {
     implementation(projects.core)
     implementation(projects.uiKit)
-    implementation(projects.network)
+    implementation(projects.repoCharacters)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 }

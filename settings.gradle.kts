@@ -17,3 +17,5 @@ include(":ui_kit")
 include(":feature_characters")
 include(":feature_comics")
 include(":feature_settings")
+
+include(":repo_characters")
