@@ -10,6 +10,7 @@ data class MarvelResponse<T>(
 )
 
 data class DataContainer<T>(
+    val total: Int,
     val results: T
 )
 

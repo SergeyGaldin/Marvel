@@ -16,6 +16,7 @@ import javax.inject.Inject
 
 data class CharactersScreenState(
     val characters: List<Character>? = null,
+    val total: Int? = null,
     override val isRefreshing: Boolean = true,
     override var errorMessage: String? = null,
     override var throwable: Throwable? = null
@@ -39,6 +40,10 @@ class CharactersViewModel @Inject constructor(
         _charactersScreenState.value = _charactersScreenState.value.copy(
             characters = when (charactersResult) {
                 is ResultResponse.Success -> charactersResult.data?.results
+                is ResultResponse.Error -> null
+            },
+            total = when (charactersResult) {
+                is ResultResponse.Success -> charactersResult.data?.total
                 is ResultResponse.Error -> null
             },
             isRefreshing = false,
