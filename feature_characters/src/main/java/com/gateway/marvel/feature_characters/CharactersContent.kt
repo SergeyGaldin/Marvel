@@ -56,7 +56,7 @@ private fun CharacterItem(
 ) {
     var savedToFavorites by remember { mutableStateOf(false) }
 
-    val iconFavorites = if (savedToFavorites) Icons.Default.Star else Icons.Default.StarOutline
+    val iconFavorite = if (savedToFavorites) Icons.Default.Star else Icons.Default.StarOutline
 
     Column(
         modifier = Modifier
@@ -106,7 +106,7 @@ private fun CharacterItem(
             }
         ) {
             Icon(
-                imageVector = iconFavorites,
+                imageVector = iconFavorite,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.tertiary
             )

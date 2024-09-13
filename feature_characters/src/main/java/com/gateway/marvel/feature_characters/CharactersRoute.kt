@@ -8,12 +8,13 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gateway.marvel.ui_kit.components.AlertDialogExceptionInfo
-import com.gateway.marvel.ui_kit.components.CenterAlignedTopAppBarBase
 import com.gateway.marvel.ui_kit.components.DataEmptyLayout
 import com.gateway.marvel.ui_kit.components.showToastLong
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +28,7 @@ fun CharactersRoute(
     charactersViewModel: CharactersViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    val showOnlyFavoritesCharacters = remember { mutableStateOf(false) }
 
     val charactersScreenState by charactersViewModel.charactersScreenState
     val isRefreshing = charactersScreenState.isRefreshing
@@ -43,8 +45,9 @@ fun CharactersRoute(
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBarBase(
-                title = nameScreen
+            CharactersTopAppBar(
+                nameScreen = nameScreen,
+                showOnlyFavoritesCharacters = showOnlyFavoritesCharacters
             )
         }
     ) {
