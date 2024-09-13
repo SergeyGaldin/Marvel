@@ -59,7 +59,11 @@ fun CharactersRoute(
             onRefresh = onRefresh,
         ) {
             if (!charactersScreenState.characters.isNullOrEmpty()) CharactersContent(
-                characters = charactersScreenState.characters!!
+                characters = charactersScreenState.characters!!,
+                offset = charactersViewModel.offset.value,
+                total = 1550,
+                onNextCharacters = charactersViewModel::nextCharacters,
+                onPreviousCharacters = charactersViewModel::previousCharacters
             ) else if (charactersScreenState.characters.isNullOrEmpty() && !isRefreshing) DataEmptyLayout(
                 onRefresh = onRefresh
             )

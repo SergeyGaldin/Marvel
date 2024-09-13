@@ -2,7 +2,7 @@ package com.gateway.marvel.network.di
 
 import com.gateway.marvel.network.endpoints.MarvelApi
 import com.gateway.marvel.network.interceptor.AuthInterceptor
-import com.gateway.marvel.network.utils.Constants
+import com.gateway.marvel.network.utils.NetworkConstants
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -25,8 +25,8 @@ object NetworkModule {
 
     @Provides
     fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor(
-        publicKey = Constants.PUBLIC_KEY,
-        privateKey = Constants.PRIVATE_KEY
+        publicKey = NetworkConstants.PUBLIC_KEY,
+        privateKey = NetworkConstants.PRIVATE_KEY
     )
 
     @Provides
@@ -52,7 +52,7 @@ object NetworkModule {
         okHttpClient: OkHttpClient,
         gson: Gson
     ): Retrofit = Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL_MARVEL)
+        .baseUrl(NetworkConstants.BASE_URL_MARVEL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())

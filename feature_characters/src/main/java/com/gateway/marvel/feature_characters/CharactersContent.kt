@@ -1,7 +1,9 @@
 package com.gateway.marvel.feature_characters
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,18 +37,62 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.gateway.marvel.core.dto.Character
 import com.gateway.marvel.core.dto.MockEntity
+import com.gateway.marvel.core.utils.CommonConstants
 import com.gateway.marvel.ui_kit.theme.MarvelTheme
 
 @Composable
 fun CharactersContent(
-    characters: List<Character>
+    characters: List<Character>,
+    offset: Int,
+    total: Int,
+    onNextCharacters: () -> Unit,
+    onPreviousCharacters: () -> Unit,
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize()
+    Column(modifier = Modifier.fillMaxSize()) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier.weight(1f)
+        ) {
+            items(characters) { character ->
+                CharacterItem(character = character)
+            }
+        }
+
+        PaginationLayout(
+            offset = offset,
+            total = total,
+            onNextCharacters = onNextCharacters,
+            onPreviousCharacters = onPreviousCharacters
+        )
+    }
+}
+
+@Composable
+private fun PaginationLayout(
+    offset: Int,
+    total: Int,
+    onNextCharacters: () -> Unit,
+    onPreviousCharacters: () -> Unit,
+) {
+    val offsetFinal = offset + CommonConstants.LIMIT_CHARACTER
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        items(characters) { character ->
-            CharacterItem(character = character)
+        TextButton(
+            onClick = onPreviousCharacters
+        ) {
+            Text(text = "Предыдущие")
+        }
+
+        Text(text = "$offset .. $offsetFinal / $total")
+
+        TextButton(
+            onClick = onNextCharacters
+        ) {
+            Text(text = "Следующие")
         }
     }
 }
@@ -55,7 +102,6 @@ private fun CharacterItem(
     character: Character
 ) {
     var savedToFavorites by remember { mutableStateOf(false) }
-
     val iconFavorite = if (savedToFavorites) Icons.Default.Star else Icons.Default.StarOutline
 
     Column(
@@ -121,6 +167,19 @@ private fun CharacterItemPreview() {
     MarvelTheme {
         CharacterItem(
             character = MockEntity.mockCharacter()
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PaginationLayoutPreview() {
+    MarvelTheme {
+        PaginationLayout(
+            offset = 0,
+            total = 1574,
+            onNextCharacters = {},
+            onPreviousCharacters = {}
         )
     }
 }

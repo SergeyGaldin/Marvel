@@ -8,6 +8,6 @@ import javax.inject.Inject
 class CharactersRepository @Inject constructor(
     private val marvelApi: MarvelApi
 ) {
-    suspend fun fetchCharacters() =
-        getDataFromNetwork<List<Character>> { marvelApi.getCharacters() }
+    suspend fun fetchCharacters(offset: Int) =
+        getDataFromNetwork<List<Character>> { marvelApi.getCharacters(offset = offset) }
 }
