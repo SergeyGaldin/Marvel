@@ -78,9 +78,9 @@ private fun CharacterItem(
                         bottomStart = CornerSize(0.dp)
                     )
                 ),
-            model = "${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}",
+            model = "${character.thumbnail.path}.${character.thumbnail.extension}",
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.FillBounds
         )
 
         HorizontalDivider(
@@ -91,7 +91,8 @@ private fun CharacterItem(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 6.dp),
+                .padding(top = 6.dp)
+                .padding(horizontal = 3.dp),
             text = character.name.uppercase(),
             textAlign = TextAlign.Center,
             maxLines = 2,
