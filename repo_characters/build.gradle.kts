@@ -6,7 +6,6 @@ libraryConfig {
     namespace = "repo_characters"
     moduleUsesNetworkApi = true
     moduleUsesLocalDB = true
-    moduleUsesKSP = true
     moduleUsesHilt = true
 }
 

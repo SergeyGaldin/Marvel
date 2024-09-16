@@ -78,10 +78,6 @@ class LibraryConfigPlugin : Plugin<Project> {
         apply("com.android.library")
         apply("org.jetbrains.kotlin.android")
         apply("com.google.devtools.ksp")
-
-//        if (libraryConfig.moduleUsesKSP) {
-//            apply("com.google.devtools.ksp")
-//        }
     }
 
     private fun Project.lateConfigurePlugins(
@@ -90,10 +86,6 @@ class LibraryConfigPlugin : Plugin<Project> {
         if (libraryConfig.moduleUsesCompose) {
             apply("org.jetbrains.kotlin.plugin.compose")
         }
-
-//        if (libraryConfig.moduleUsesKSP) {
-//            apply("com.google.devtools.ksp")
-//        }
 
         if (libraryConfig.moduleUsesHilt) {
             apply("dagger.hilt.android.plugin")
@@ -132,17 +124,13 @@ class LibraryConfigPlugin : Plugin<Project> {
         if (libraryConfig.moduleUsesHilt) {
             addDependency(versionCatalog, "hilt.android")
             addDependency(versionCatalog, "hilt.navigation.compose")
-            if (libraryConfig.moduleUsesKSP) {
-                addKSPDependency(versionCatalog, "dagger.hilt.android.compiler")
-            }
+            addKSPDependency(versionCatalog, "dagger.hilt.android.compiler")
         }
 
         if (libraryConfig.moduleUsesLocalDB) {
             addDependency(versionCatalog, "room.runtime")
             addDependency(versionCatalog, "androidx.room.ktx")
-            if (libraryConfig.moduleUsesKSP) {
-                addKSPDependency(versionCatalog, "room.compiler")
-            }
+            addKSPDependency(versionCatalog, "room.compiler")
         }
     }
 
@@ -173,5 +161,4 @@ open class LibraryConfigExtension {
     var moduleUsesNetworkApi: Boolean = false
     var moduleUsesLocalDB: Boolean = false
     var moduleUsesHilt: Boolean = false
-    var moduleUsesKSP: Boolean = false
 }

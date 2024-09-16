@@ -5,7 +5,6 @@ plugins {
 libraryConfig {
     namespace = "feature_comics"
     moduleUsesCompose = true
-    moduleUsesKSP = true
     moduleUsesHilt = true
 }
 

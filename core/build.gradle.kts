@@ -5,5 +5,4 @@ plugins {
 libraryConfig {
     namespace = "core"
     moduleUsesLocalDB = true
-    moduleUsesKSP = true
 }

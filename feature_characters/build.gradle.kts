@@ -6,7 +6,6 @@ libraryConfig {
     namespace = "feature_characters"
     moduleUsesCompose = true
     moduleUsesNetworkApi = true
-    moduleUsesKSP = true
     moduleUsesHilt = true
 }
 

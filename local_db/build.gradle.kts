@@ -5,7 +5,6 @@ plugins {
 libraryConfig {
     namespace = "local_db"
     moduleUsesLocalDB = true
-    moduleUsesKSP = true
     moduleUsesHilt = true
 }
 

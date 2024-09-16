@@ -5,7 +5,6 @@ plugins {
 libraryConfig {
     namespace = "network"
     moduleUsesNetworkApi = true
-    moduleUsesKSP = true
     moduleUsesHilt = true
 }
 
