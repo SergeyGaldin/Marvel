@@ -9,6 +9,7 @@ dependencies {
     implementation(projects.core)
     implementation(projects.uiKit)
     implementation(projects.network)
+    implementation(projects.localDb)
     implementation(projects.featureCharacters)
     implementation(projects.featureComics)
     implementation(projects.featureSettings)
@@ -20,6 +21,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.compose.material.iconsExtended)
+    implementation(libs.coil.compose)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.runtime)

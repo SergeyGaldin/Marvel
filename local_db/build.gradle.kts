@@ -9,6 +9,12 @@ libraryConfig {
     moduleUsesHilt = true
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     implementation(projects.core)
+
+    implementation(libs.gson)
 }

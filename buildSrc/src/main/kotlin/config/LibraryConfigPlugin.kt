@@ -1,8 +1,6 @@
 package config
 
 import com.android.build.gradle.LibraryExtension
-import com.google.devtools.ksp.gradle.KspExtension
-import com.google.devtools.ksp.gradle.KspTask
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -27,8 +25,6 @@ class LibraryConfigPlugin : Plugin<Project> {
                 project.configureLibraryModule(versionCatalog, libraryConfig)
                 project.lateConfigurePlugins(libraryConfig)
                 project.setupDependencies(versionCatalog, libraryConfig)
-
-                if (libraryConfig.moduleUsesKSP && libraryConfig.exportSchema) project.configureKsp()
             }
         }
 
@@ -81,6 +77,11 @@ class LibraryConfigPlugin : Plugin<Project> {
     private fun Project.configurePlugins() = with(plugins) {
         apply("com.android.library")
         apply("org.jetbrains.kotlin.android")
+        apply("com.google.devtools.ksp")
+
+//        if (libraryConfig.moduleUsesKSP) {
+//            apply("com.google.devtools.ksp")
+//        }
     }
 
     private fun Project.lateConfigurePlugins(
@@ -90,9 +91,9 @@ class LibraryConfigPlugin : Plugin<Project> {
             apply("org.jetbrains.kotlin.plugin.compose")
         }
 
-        if (libraryConfig.moduleUsesKSP) {
-            apply("com.google.devtools.ksp")
-        }
+//        if (libraryConfig.moduleUsesKSP) {
+//            apply("com.google.devtools.ksp")
+//        }
 
         if (libraryConfig.moduleUsesHilt) {
             apply("dagger.hilt.android.plugin")
@@ -145,14 +146,6 @@ class LibraryConfigPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.configureKsp() {
-        tasks.withType(KspTask::class.java).configureEach {
-            with(extensions.getByName<KspExtension>("ksp")) {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
-        }
-    }
-
     private fun DependencyHandler.addDependency(
         versionCatalog: VersionCatalog,
         alias: String
@@ -181,6 +174,4 @@ open class LibraryConfigExtension {
     var moduleUsesLocalDB: Boolean = false
     var moduleUsesHilt: Boolean = false
     var moduleUsesKSP: Boolean = false
-
-    var exportSchema: Boolean = false
 }
