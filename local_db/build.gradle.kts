@@ -3,8 +3,7 @@ plugins {
 }
 
 libraryConfig {
-    namespace = "repo_characters"
-    moduleUsesNetworkApi = true
+    namespace = "local_db"
     moduleUsesLocalDB = true
     moduleUsesKSP = true
     moduleUsesHilt = true
@@ -12,5 +11,4 @@ libraryConfig {
 
 dependencies {
     implementation(projects.core)
-    implementation(projects.network)
 }

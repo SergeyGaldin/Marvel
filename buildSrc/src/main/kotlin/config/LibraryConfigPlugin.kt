@@ -1,6 +1,8 @@
 package config
 
 import com.android.build.gradle.LibraryExtension
+import com.google.devtools.ksp.gradle.KspExtension
+import com.google.devtools.ksp.gradle.KspTask
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -25,6 +27,8 @@ class LibraryConfigPlugin : Plugin<Project> {
                 project.configureLibraryModule(versionCatalog, libraryConfig)
                 project.lateConfigurePlugins(libraryConfig)
                 project.setupDependencies(versionCatalog, libraryConfig)
+
+                if (libraryConfig.moduleUsesKSP && libraryConfig.exportSchema) project.configureKsp()
             }
         }
 
@@ -127,7 +131,25 @@ class LibraryConfigPlugin : Plugin<Project> {
         if (libraryConfig.moduleUsesHilt) {
             addDependency(versionCatalog, "hilt.android")
             addDependency(versionCatalog, "hilt.navigation.compose")
-            addKSPDependency(versionCatalog, "dagger.hilt.android.compiler")
+            if (libraryConfig.moduleUsesKSP) {
+                addKSPDependency(versionCatalog, "dagger.hilt.android.compiler")
+            }
+        }
+
+        if (libraryConfig.moduleUsesLocalDB) {
+            addDependency(versionCatalog, "room.runtime")
+            addDependency(versionCatalog, "androidx.room.ktx")
+            if (libraryConfig.moduleUsesKSP) {
+                addKSPDependency(versionCatalog, "room.compiler")
+            }
+        }
+    }
+
+    private fun Project.configureKsp() {
+        tasks.withType(KspTask::class.java).configureEach {
+            with(extensions.getByName<KspExtension>("ksp")) {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
         }
     }
 
@@ -156,6 +178,9 @@ open class LibraryConfigExtension {
     var namespace: String = ""
     var moduleUsesCompose: Boolean = false
     var moduleUsesNetworkApi: Boolean = false
-    var moduleUsesKSP: Boolean = false
+    var moduleUsesLocalDB: Boolean = false
     var moduleUsesHilt: Boolean = false
+    var moduleUsesKSP: Boolean = false
+
+    var exportSchema: Boolean = false
 }

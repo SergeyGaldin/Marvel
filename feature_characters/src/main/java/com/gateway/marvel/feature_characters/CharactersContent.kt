@@ -36,7 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.gateway.marvel.core.dto.Character
-import com.gateway.marvel.core.dto.MockEntity
+import com.gateway.marvel.core.mock.MockEntity
 import com.gateway.marvel.core.utils.CommonConstants
 import com.gateway.marvel.ui_kit.theme.MarvelTheme
 

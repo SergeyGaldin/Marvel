@@ -1,4 +1,7 @@
-package com.gateway.marvel.core.dto
+package com.gateway.marvel.core.mock
+
+import com.gateway.marvel.core.dto.Character
+import com.gateway.marvel.core.dto.Thumbnail
 
 object MockEntity  {
     fun mockThumbnail() = Thumbnail(

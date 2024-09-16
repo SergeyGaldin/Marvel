@@ -4,6 +4,4 @@ plugins {
 
 libraryConfig {
     namespace = "core"
-    moduleUsesKSP = true
-    moduleUsesHilt = true
 }
