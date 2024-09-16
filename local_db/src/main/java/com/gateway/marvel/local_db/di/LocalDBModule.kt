@@ -3,6 +3,7 @@ package com.gateway.marvel.local_db.di
 import android.content.Context
 import androidx.room.Room
 import com.gateway.marvel.local_db.MarvelDatabase
+import com.gateway.marvel.local_db.dao.CharacterDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,4 +20,9 @@ object LocalDBModule {
     ): MarvelDatabase = Room.databaseBuilder(context, MarvelDatabase::class.java, "marvel.db")
         .fallbackToDestructiveMigration()
         .build()
+
+    @Provides
+    fun provideCharacterDao(
+        marvelDatabase: MarvelDatabase
+    ): CharacterDao = marvelDatabase.characterDao()
 }
