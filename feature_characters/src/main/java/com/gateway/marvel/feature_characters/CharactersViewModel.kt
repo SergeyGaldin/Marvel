@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gateway.marvel.core.dto.Character
-import com.gateway.marvel.core.dto.ResultResponse
 import com.gateway.marvel.core.utils.CommonConstants
 import com.gateway.marvel.repo_characters.CharactersRepository
 import com.gateway.marvel.ui_kit.utils.ScreenState
@@ -17,10 +16,11 @@ import javax.inject.Inject
 data class CharactersScreenState(
     val characters: List<Character>? = null,
     val total: Int? = null,
+    val isShowOnlyFavoritesCharacters: Boolean = false,
     override val isRefreshing: Boolean = true,
     override var errorMessage: String? = null,
     override var throwable: Throwable? = null
-): ScreenState()
+) : ScreenState()
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
@@ -35,43 +35,52 @@ class CharactersViewModel @Inject constructor(
     suspend fun fetchCharacters() {
         _charactersScreenState.value = _charactersScreenState.value.copy(isRefreshing = true)
 
-        val charactersResult = charactersRepository.fetchCharacters(_offset.intValue)
+        val charactersData = charactersRepository.fetchCharacters(
+            isGetLocalData = _charactersScreenState.value.isShowOnlyFavoritesCharacters,
+            offset = _offset.intValue
+        )
 
         _charactersScreenState.value = _charactersScreenState.value.copy(
-            characters = when (charactersResult) {
-                is ResultResponse.Success -> charactersResult.data?.results
-                is ResultResponse.Error -> null
-            },
-            total = when (charactersResult) {
-                is ResultResponse.Success -> charactersResult.data?.total
-                is ResultResponse.Error -> null
-            },
+            characters = charactersData.characters,
+            total = charactersData.total,
             isRefreshing = false,
-            errorMessage = when {
-                charactersResult is ResultResponse.Error -> charactersResult.errorMsg
-                else -> null
-            },
-            throwable = when {
-                charactersResult is ResultResponse.Error -> charactersResult.throwable
-                else -> null
+            errorMessage = charactersData.errorMessage,
+            throwable = charactersData.throwable
+        )
+    }
+
+    fun addFavoriteCharacter(character: Character) {
+        _charactersScreenState.value = _charactersScreenState.value.copy(
+            characters = _charactersScreenState.value.characters?.map {
+                if (it.id == character.id) it.copy(isFavorite = true) else it
             }
         )
+
+        viewModelScope.launch {
+            charactersRepository.addFavoriteCharacter(character)
+        }
+    }
+
+    fun deleteFavoriteCharacter(character: Character) {
+        _charactersScreenState.value = _charactersScreenState.value.copy(
+            characters = _charactersScreenState.value.characters?.map {
+                if (it.id == character.id) it.copy(isFavorite = false) else it
+            }
+        )
+
+        viewModelScope.launch {
+            charactersRepository.deleteFavoriteCharacter(character)
+        }
     }
 
     fun nextCharacters() {
         _offset.intValue += CommonConstants.LIMIT_CHARACTER
-
-        viewModelScope.launch {
-            fetchCharacters()
-        }
+        getCharacters()
     }
 
     fun previousCharacters() {
         _offset.intValue -= CommonConstants.LIMIT_CHARACTER
-
-        viewModelScope.launch {
-            fetchCharacters()
-        }
+        getCharacters()
     }
 
     fun clearError() {
@@ -79,5 +88,18 @@ class CharactersViewModel @Inject constructor(
             errorMessage = null,
             throwable = null
         )
+    }
+
+    fun changeStateShowOnlyFavoritesCharacters() {
+        _charactersScreenState.value = _charactersScreenState.value.copy(
+            isShowOnlyFavoritesCharacters = !_charactersScreenState.value.isShowOnlyFavoritesCharacters
+        )
+        getCharacters()
+    }
+
+    private fun getCharacters() {
+        viewModelScope.launch {
+            fetchCharacters()
+        }
     }
 }

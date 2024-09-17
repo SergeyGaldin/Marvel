@@ -8,8 +8,6 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,7 +26,6 @@ fun CharactersRoute(
     charactersViewModel: CharactersViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val showOnlyFavoritesCharacters = remember { mutableStateOf(false) }
 
     val charactersScreenState by charactersViewModel.charactersScreenState
     val isRefreshing = charactersScreenState.isRefreshing
@@ -47,7 +44,8 @@ fun CharactersRoute(
         topBar = {
             CharactersTopAppBar(
                 nameScreen = nameScreen,
-                showOnlyFavoritesCharacters = showOnlyFavoritesCharacters
+                showOnlyFavoritesCharacters = charactersScreenState.isShowOnlyFavoritesCharacters,
+                changeStateShowOnlyFavoritesCharacters = charactersViewModel::changeStateShowOnlyFavoritesCharacters
             )
         }
     ) {
@@ -63,8 +61,10 @@ fun CharactersRoute(
                 offset = charactersViewModel.offset.value,
                 total = charactersScreenState.total ?: 0,
                 onNextCharacters = charactersViewModel::nextCharacters,
-                onPreviousCharacters = charactersViewModel::previousCharacters
-            ) else if (charactersScreenState.characters.isNullOrEmpty() && !isRefreshing) DataEmptyLayout(
+                onPreviousCharacters = charactersViewModel::previousCharacters,
+                onAddFavoriteCharacter = charactersViewModel::addFavoriteCharacter,
+                onDeleteFavoriteCharacter = charactersViewModel::deleteFavoriteCharacter
+            ) else if (!charactersScreenState.characters.isNullOrEmpty() && !isRefreshing) DataEmptyLayout(
                 onRefresh = onRefresh
             )
         }

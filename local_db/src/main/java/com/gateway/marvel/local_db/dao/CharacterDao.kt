@@ -6,12 +6,11 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.gateway.marvel.core.dto.Character
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CharacterDao {
     @Query("SELECT * FROM Character")
-    fun getCharacters(): Flow<List<Character>>
+    suspend fun getCharacters(): List<Character>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(character: Character)

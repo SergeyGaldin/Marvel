@@ -1,7 +1,7 @@
 package com.gateway.marvel.network.endpoints
 
 import com.gateway.marvel.core.dto.Character
-import com.gateway.marvel.core.dto.MarvelResponse
+import com.gateway.marvel.network.utils.MarvelResponse
 import com.gateway.marvel.core.utils.CommonConstants
 import retrofit2.Response
 import retrofit2.http.GET

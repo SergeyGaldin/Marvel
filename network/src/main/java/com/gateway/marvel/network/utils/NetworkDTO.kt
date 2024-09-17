@@ -1,4 +1,4 @@
-package com.gateway.marvel.core.dto
+package com.gateway.marvel.network.utils
 
 sealed class ResultResponse<out T> {
     data class Success<T>(val data: DataContainer<T>?) : ResultResponse<T>()

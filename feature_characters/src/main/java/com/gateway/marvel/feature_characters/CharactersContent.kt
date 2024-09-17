@@ -23,9 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +45,8 @@ fun CharactersContent(
     total: Int,
     onNextCharacters: () -> Unit,
     onPreviousCharacters: () -> Unit,
+    onAddFavoriteCharacter: (Character) -> Unit,
+    onDeleteFavoriteCharacter: (Character) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         LazyVerticalGrid(
@@ -54,7 +54,12 @@ fun CharactersContent(
             modifier = Modifier.weight(1f)
         ) {
             items(characters) { character ->
-                CharacterItem(character = character)
+                CharacterItem(
+                    character = character,
+                    isFavorite = character.isFavorite,
+                    onAddFavoriteCharacter = onAddFavoriteCharacter,
+                    onDeleteFavoriteCharacter = onDeleteFavoriteCharacter
+                )
             }
         }
 
@@ -99,11 +104,15 @@ private fun PaginationLayout(
 
 @Composable
 private fun CharacterItem(
-    character: Character
+    character: Character,
+    isFavorite: Boolean,
+    onAddFavoriteCharacter: (Character) -> Unit,
+    onDeleteFavoriteCharacter: (Character) -> Unit,
 ) {
-    var savedToFavorites by remember { mutableStateOf(false) }
+    println(character)
+    val savedToFavorites by rememberUpdatedState(isFavorite)
     val iconFavorite = if (savedToFavorites) Icons.Default.Star else Icons.Default.StarOutline
-
+    println(savedToFavorites)
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -148,8 +157,9 @@ private fun CharacterItem(
         IconButton(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
-                savedToFavorites = !savedToFavorites
-                // TODO: Сохранение в избранное
+                val newFavoriteState = !savedToFavorites
+                if (newFavoriteState) onAddFavoriteCharacter(character)
+                else onDeleteFavoriteCharacter(character)
             }
         ) {
             Icon(
@@ -166,7 +176,10 @@ private fun CharacterItem(
 private fun CharacterItemPreview() {
     MarvelTheme {
         CharacterItem(
-            character = MockEntity.mockCharacter()
+            character = MockEntity.mockCharacter(),
+            isFavorite = true,
+            onAddFavoriteCharacter = {},
+            onDeleteFavoriteCharacter = {}
         )
     }
 }

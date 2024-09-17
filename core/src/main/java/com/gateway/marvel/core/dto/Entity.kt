@@ -8,7 +8,9 @@ data class Character(
     @PrimaryKey val id: Int,
     val name: String,
     val description: String,
-    val thumbnail: Thumbnail
+    val thumbnail: Thumbnail,
+
+    var isFavorite: Boolean = false
 )
 
 data class Thumbnail(
