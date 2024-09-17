@@ -32,7 +32,8 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.gateway.marvel.core.utils.DestinationMainContent
+import com.gateway.marvel.core.navigation.DestinationMainContent
+import com.gateway.marvel.core.navigation.MainScreenContent
 import com.gateway.marvel.ui_kit.theme.MarvelTheme
 
 @Preview(name = "Main light theme", uiMode = Configuration.UI_MODE_NIGHT_NO)

@@ -1,7 +1,7 @@
 package com.gateway.marvel.local_preferences
 
 import android.content.SharedPreferences
-import com.gateway.marvel.core.utils.DestinationMainContent
+import com.gateway.marvel.core.navigation.DestinationMainContent
 import com.gateway.marvel.core.utils.SettingsConstants
 import javax.inject.Inject
 

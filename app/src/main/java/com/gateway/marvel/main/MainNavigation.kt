@@ -4,30 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.gateway.marvel.core.utils.DestinationMainContent
+import com.gateway.marvel.core.navigation.MainScreenContent
 import com.gateway.marvel.feature_characters.CharactersRoute
 import com.gateway.marvel.feature_comics.ComicsScreen
 import com.gateway.marvel.feature_settings.SettingsRoute
-
-sealed class MainScreenContent(
-    val route: String,
-    val nameScreen: String
-) {
-    data object Characters : MainScreenContent(
-        route = DestinationMainContent.CHARACTERS_ROUTE,
-        nameScreen = "Персонажи"
-    )
-
-    data object Comics : MainScreenContent(
-        route = DestinationMainContent.COMICS_ROUTE,
-        nameScreen = "Комиксы"
-    )
-
-    data object Settings : MainScreenContent(
-        route = DestinationMainContent.SETTINGS_ROUTE,
-        nameScreen = "Настройки"
-    )
-}
 
 @Composable
 fun MainContentNavGraph(
@@ -49,7 +29,9 @@ fun MainContentNavGraph(
         }
 
         composable(MainScreenContent.Settings.route) {
-            SettingsRoute()
+            SettingsRoute(
+                nameScreen = MainScreenContent.Settings.nameScreen
+            )
         }
     }
 }

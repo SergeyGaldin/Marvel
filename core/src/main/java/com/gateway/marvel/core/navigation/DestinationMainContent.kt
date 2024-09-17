@@ -1,4 +1,4 @@
-package com.gateway.marvel.core.utils
+package com.gateway.marvel.core.navigation
 
 object DestinationMainContent {
     const val CHARACTERS_ROUTE = "characters"
