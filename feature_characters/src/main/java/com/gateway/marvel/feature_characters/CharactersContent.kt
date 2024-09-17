@@ -2,6 +2,7 @@ package com.gateway.marvel.feature_characters
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,6 +44,7 @@ fun CharactersContent(
     characters: List<Character>,
     offset: Int,
     total: Int,
+    showOnlyFavoritesCharacters: Boolean,
     onNextCharacters: () -> Unit,
     onPreviousCharacters: () -> Unit,
     onAddFavoriteCharacter: (Character) -> Unit,
@@ -63,11 +65,27 @@ fun CharactersContent(
             }
         }
 
-        PaginationLayout(
+        if (showOnlyFavoritesCharacters) LocalInfoLayout(
+            total = total
+        ) else PaginationLayout(
             offset = offset,
             total = total,
             onNextCharacters = onNextCharacters,
             onPreviousCharacters = onPreviousCharacters
+        )
+    }
+}
+
+@Composable
+private fun LocalInfoLayout(
+    total: Int
+) {
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "$total избранных персонажа"
         )
     }
 }
@@ -109,10 +127,9 @@ private fun CharacterItem(
     onAddFavoriteCharacter: (Character) -> Unit,
     onDeleteFavoriteCharacter: (Character) -> Unit,
 ) {
-    println(character)
     val savedToFavorites by rememberUpdatedState(isFavorite)
     val iconFavorite = if (savedToFavorites) Icons.Default.Star else Icons.Default.StarOutline
-    println(savedToFavorites)
+
     Column(
         modifier = Modifier
             .fillMaxWidth()

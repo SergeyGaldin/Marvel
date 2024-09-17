@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.FilledTonalButton
@@ -27,7 +25,8 @@ import com.gateway.marvel.ui_kit.theme.MarvelTheme
 
 @Composable
 fun DataEmptyLayout(
-    onRefresh: () -> Unit
+    text: String,
+    onRefresh: (() -> Unit)? = null
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -35,7 +34,7 @@ fun DataEmptyLayout(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Нет данных",
+            text = text,
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground
@@ -43,7 +42,8 @@ fun DataEmptyLayout(
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        FilledTonalButton(shape = MaterialTheme.shapes.medium,
+        if (onRefresh != null) FilledTonalButton(
+            shape = MaterialTheme.shapes.medium,
             contentPadding = PaddingValues(20.dp, 8.dp),
             onClick = onRefresh,
             content = {
@@ -68,6 +68,9 @@ fun DataEmptyLayout(
 @Composable
 private fun DataEmptyLayoutPreview() {
     MarvelTheme {
-        DataEmptyLayout {}
+        DataEmptyLayout(
+            text = "Нет данных",
+            onRefresh = {}
+        )
     }
 }

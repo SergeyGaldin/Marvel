@@ -56,17 +56,23 @@ fun CharactersRoute(
             isRefreshing = isRefreshing,
             onRefresh = onRefresh,
         ) {
-            if (!charactersScreenState.characters.isNullOrEmpty()) CharactersContent(
+            if (!charactersScreenState.characters.isNullOrEmpty() && !isRefreshing) CharactersContent(
                 characters = charactersScreenState.characters!!,
                 offset = charactersViewModel.offset.value,
                 total = charactersScreenState.total ?: 0,
+                showOnlyFavoritesCharacters = charactersScreenState.isShowOnlyFavoritesCharacters,
                 onNextCharacters = charactersViewModel::nextCharacters,
                 onPreviousCharacters = charactersViewModel::previousCharacters,
                 onAddFavoriteCharacter = charactersViewModel::addFavoriteCharacter,
                 onDeleteFavoriteCharacter = charactersViewModel::deleteFavoriteCharacter
-            ) else if (!charactersScreenState.characters.isNullOrEmpty() && !isRefreshing) DataEmptyLayout(
-                onRefresh = onRefresh
-            )
+            ) else if (charactersScreenState.characters.isNullOrEmpty() && !isRefreshing) {
+                if (charactersScreenState.isShowOnlyFavoritesCharacters) DataEmptyLayout(
+                    text = "Нет избранных персонажей"
+                ) else DataEmptyLayout(
+                    text = "Нет данных",
+                    onRefresh = onRefresh
+                )
+            }
         }
     }
 

@@ -16,7 +16,6 @@ data class CharactersData(
     val throwable: Throwable? = null
 )
 
-// TODO: Заменить  isGetLocalData на enum
 class CharactersRepository @Inject constructor(
     private val marvelApi: MarvelApi,
     private val characterDao: CharacterDao
