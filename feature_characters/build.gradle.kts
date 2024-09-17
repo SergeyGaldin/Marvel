@@ -5,7 +5,6 @@ plugins {
 libraryConfig {
     namespace = "feature_characters"
     moduleUsesCompose = true
-    moduleUsesNetworkApi = true
     moduleUsesHilt = true
 }
 

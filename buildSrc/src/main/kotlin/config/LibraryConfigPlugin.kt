@@ -129,8 +129,12 @@ class LibraryConfigPlugin : Plugin<Project> {
 
         if (libraryConfig.moduleUsesLocalDB) {
             addDependency(versionCatalog, "room.runtime")
-            addDependency(versionCatalog, "androidx.room.ktx")
+            addDependency(versionCatalog, "room.ktx")
             addKSPDependency(versionCatalog, "room.compiler")
+        }
+
+        if (libraryConfig.moduleUsesPreferences) {
+            addDependency(versionCatalog, "preference.ktx")
         }
     }
 
@@ -158,7 +162,8 @@ class LibraryConfigPlugin : Plugin<Project> {
 open class LibraryConfigExtension {
     var namespace: String = ""
     var moduleUsesCompose: Boolean = false
+    var moduleUsesHilt: Boolean = false
     var moduleUsesNetworkApi: Boolean = false
     var moduleUsesLocalDB: Boolean = false
-    var moduleUsesHilt: Boolean = false
+    var moduleUsesPreferences: Boolean = false
 }

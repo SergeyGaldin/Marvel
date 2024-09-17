@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.gateway.marvel.feature_characters.CharactersRoute
 import com.gateway.marvel.feature_comics.ComicsScreen
-import com.gateway.marvel.feature_settings.SettingsScreen
+import com.gateway.marvel.feature_settings.SettingsRoute
 
 object DestinationMainContent {
     const val CHARACTERS_ROUTE = "characters"
@@ -54,7 +54,7 @@ fun MainContentNavGraph(
         }
 
         composable(MainScreenContent.Settings.route) {
-            SettingsScreen()
+            SettingsRoute()
         }
     }
 }

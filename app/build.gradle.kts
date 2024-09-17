@@ -10,6 +10,7 @@ dependencies {
     implementation(projects.uiKit)
     implementation(projects.network)
     implementation(projects.localDb)
+    implementation(projects.localPreferences)
     implementation(projects.featureCharacters)
     implementation(projects.featureComics)
     implementation(projects.featureSettings)
@@ -41,8 +42,9 @@ dependencies {
     implementation(libs.gson)
 
     implementation(libs.room.runtime)
-    implementation(libs.androidx.room.ktx)
+    implementation(libs.room.ktx)
     ksp(libs.room.compiler)
+    implementation(libs.preference.ktx)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)

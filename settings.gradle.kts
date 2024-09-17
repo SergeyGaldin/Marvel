@@ -12,10 +12,12 @@ pluginManagement {
 include(":app")
 
 include(":ui_kit")
-
 include(":core")
+
 include(":network")
+
 include(":local_db")
+include(":local_preferences")
 
 include(":feature_characters")
 include(":feature_comics")
