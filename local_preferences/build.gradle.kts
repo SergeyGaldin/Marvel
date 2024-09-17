@@ -5,6 +5,7 @@ plugins {
 libraryConfig {
     namespace = "local_preferences"
     moduleUsesHilt = true
+    moduleUsesPreferences = true
 }
 
 dependencies {

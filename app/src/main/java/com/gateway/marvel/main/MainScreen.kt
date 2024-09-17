@@ -32,6 +32,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.gateway.marvel.core.utils.DestinationMainContent
 import com.gateway.marvel.ui_kit.theme.MarvelTheme
 
 @Preview(name = "Main light theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
@@ -39,7 +40,9 @@ import com.gateway.marvel.ui_kit.theme.MarvelTheme
 @Composable
 private fun MainScreenPreview() {
     MarvelTheme {
-        MainScreen()
+        MainScreen(
+            startDestination = DestinationMainContent.CHARACTERS_ROUTE
+        )
     }
 }
 
@@ -68,7 +71,9 @@ val bottomNavigationItems = listOf(
 )
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    startDestination: String
+) {
     val navController: NavHostController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val context = LocalContext.current
@@ -84,7 +89,8 @@ fun MainScreen() {
         content = { contentPadding ->
             MainContent(
                 contentPadding = contentPadding,
-                navController = navController
+                navController = navController,
+                startDestination = startDestination
             )
         },
         bottomBar = {
@@ -99,7 +105,8 @@ fun MainScreen() {
 @Composable
 private fun MainContent(
     contentPadding: PaddingValues,
-    navController: NavHostController
+    navController: NavHostController,
+    startDestination: String
 ) {
     Box(
         modifier = Modifier
@@ -108,7 +115,7 @@ private fun MainContent(
     ) {
         MainContentNavGraph(
             navController = navController,
-            startDestination = MainScreenContent.Characters.route
+            startDestination = startDestination
         )
     }
 }

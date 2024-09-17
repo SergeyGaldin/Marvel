@@ -4,15 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.gateway.marvel.core.utils.DestinationMainContent
 import com.gateway.marvel.feature_characters.CharactersRoute
 import com.gateway.marvel.feature_comics.ComicsScreen
 import com.gateway.marvel.feature_settings.SettingsRoute
-
-object DestinationMainContent {
-    const val CHARACTERS_ROUTE = "characters"
-    const val COMICS_ROUTE = "comics"
-    const val SETTINGS_ROUTE = "settings"
-}
 
 sealed class MainScreenContent(
     val route: String,
