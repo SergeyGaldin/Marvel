@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.gateway.marvel.local_db.MarvelDatabase
 import com.gateway.marvel.local_db.dao.CharacterDao
+import com.gateway.marvel.local_db.dao.ComicDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +26,9 @@ object LocalDBModule {
     fun provideCharacterDao(
         marvelDatabase: MarvelDatabase
     ): CharacterDao = marvelDatabase.characterDao()
+
+    @Provides
+    fun provideComicDao(
+        marvelDatabase: MarvelDatabase
+    ): ComicDao = marvelDatabase.comicDao()
 }

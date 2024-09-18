@@ -29,7 +29,7 @@ class CharactersViewModel @Inject constructor(
     private val _charactersScreenState = mutableStateOf(CharactersScreenState())
     val charactersScreenState: State<CharactersScreenState> get() = _charactersScreenState
 
-    private val _offset = mutableIntStateOf(CommonConstants.START_OFFSET_CHARACTER)
+    private val _offset = mutableIntStateOf(CommonConstants.START_OFFSET_CHARACTERS)
     val offset: State<Int> get() = _offset
 
     suspend fun fetchCharacters() {
@@ -74,12 +74,12 @@ class CharactersViewModel @Inject constructor(
     }
 
     fun nextCharacters() {
-        _offset.intValue += CommonConstants.LIMIT_CHARACTER
+        _offset.intValue += CommonConstants.LIMIT_CHARACTERS
         getCharacters()
     }
 
     fun previousCharacters() {
-        _offset.intValue -= CommonConstants.LIMIT_CHARACTER
+        _offset.intValue -= CommonConstants.LIMIT_CHARACTERS
         getCharacters()
     }
 

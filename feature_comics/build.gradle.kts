@@ -11,6 +11,7 @@ libraryConfig {
 dependencies {
     implementation(projects.core)
     implementation(projects.uiKit)
+    implementation(projects.repoComics)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 }

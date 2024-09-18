@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.gateway.marvel.core.navigation.MainScreenContent
 import com.gateway.marvel.feature_characters.CharactersRoute
-import com.gateway.marvel.feature_comics.ComicsScreen
+import com.gateway.marvel.feature_comics.ComicsRoute
 import com.gateway.marvel.feature_settings.SettingsRoute
 
 @Composable
@@ -25,7 +25,9 @@ fun MainContentNavGraph(
         }
 
         composable(MainScreenContent.Comics.route) {
-            ComicsScreen()
+            ComicsRoute(
+                nameScreen = MainScreenContent.Comics.nameScreen
+            )
         }
 
         composable(MainScreenContent.Settings.route) {

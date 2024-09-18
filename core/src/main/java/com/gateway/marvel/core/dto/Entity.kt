@@ -7,7 +7,15 @@ import androidx.room.PrimaryKey
 data class Character(
     @PrimaryKey val id: Int,
     val name: String,
-    val description: String,
+    val thumbnail: Thumbnail,
+
+    var isFavorite: Boolean = false
+)
+
+@Entity
+data class Comic(
+    @PrimaryKey val id: Int,
+    val title: String,
     val thumbnail: Thumbnail,
 
     var isFavorite: Boolean = false

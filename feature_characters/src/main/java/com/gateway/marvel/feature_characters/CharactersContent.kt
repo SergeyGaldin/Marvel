@@ -97,7 +97,7 @@ private fun PaginationLayout(
     onNextCharacters: () -> Unit,
     onPreviousCharacters: () -> Unit,
 ) {
-    val offsetFinal = offset + CommonConstants.LIMIT_CHARACTER
+    val offsetFinal = offset + CommonConstants.LIMIT_CHARACTERS
 
     Row(
         modifier = Modifier.fillMaxWidth(),

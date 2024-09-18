@@ -12,7 +12,6 @@ object MockEntity  {
     fun mockCharacter() = Character(
         id = 0,
         name = "Spider-Man",
-        description = "",
         thumbnail = mockThumbnail()
     )
 }
