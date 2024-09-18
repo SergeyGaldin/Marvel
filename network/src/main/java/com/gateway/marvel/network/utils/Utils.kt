@@ -1,5 +1,7 @@
 package com.gateway.marvel.network.utils
 
+import com.gateway.marvel.network.dto.MarvelResponse
+import com.gateway.marvel.network.dto.MarvelResponseError
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import retrofit2.Response

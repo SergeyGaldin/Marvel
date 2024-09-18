@@ -55,6 +55,7 @@ class ApplicationConfigPlugin : Plugin<Project> {
             vectorDrawables.useSupportLibrary = true
 
             signingConfig = signingConfigs.getByName("marvel release")
+            resourceConfigurations += listOf("ru")
         }
 
         buildTypes {

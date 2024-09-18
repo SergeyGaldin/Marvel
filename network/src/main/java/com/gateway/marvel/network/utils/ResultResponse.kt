@@ -1,20 +1,8 @@
 package com.gateway.marvel.network.utils
 
+import com.gateway.marvel.network.dto.DataContainer
+
 sealed class ResultResponse<out T> {
     data class Success<T>(val data: DataContainer<T>?) : ResultResponse<T>()
     data class Error(val throwable: Throwable?, val errorMsg: String?) : ResultResponse<Nothing>()
 }
-
-data class MarvelResponse<T>(
-    val data: DataContainer<T>
-)
-
-data class DataContainer<T>(
-    val total: Int,
-    val results: T
-)
-
-data class MarvelResponseError(
-    val code: String,
-    val message: String
-)
