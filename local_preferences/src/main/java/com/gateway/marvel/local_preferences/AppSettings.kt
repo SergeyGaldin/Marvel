@@ -2,8 +2,6 @@ package com.gateway.marvel.local_preferences
 
 import android.content.SharedPreferences
 import com.gateway.marvel.core.navigation.DestinationMainContent
-import com.gateway.marvel.core.utils.CommonConstants
-import com.gateway.marvel.core.utils.SettingsConstants
 import javax.inject.Inject
 
 class AppSettings @Inject constructor(
@@ -11,46 +9,59 @@ class AppSettings @Inject constructor(
 ) {
     var startDestination: String
         get() = preferences.getString(
-            SettingsConstants.KEY_START_DESTINATION,
+            KEY_START_DESTINATION,
             DestinationMainContent.CHARACTERS_ROUTE
         ).toString()
         set(value) = preferences.edit()
-            .putString(SettingsConstants.KEY_START_DESTINATION, value)
+            .putString(KEY_START_DESTINATION, value)
             .apply()
 
     var limitCharacters: Int
         get() = preferences.getInt(
-            SettingsConstants.KEY_LIMIT_CHARACTERS,
-            CommonConstants.LIMIT_CHARACTERS
+            KEY_LIMIT_CHARACTERS,
+            LIMIT_CHARACTERS
         )
         set(value) = preferences.edit()
-            .putInt(SettingsConstants.KEY_LIMIT_CHARACTERS, value)
+            .putInt(KEY_LIMIT_CHARACTERS, value)
             .apply()
 
     var startOffsetCharacters: Int
         get() = preferences.getInt(
-            SettingsConstants.KEY_START_OFFSET_CHARACTERS,
-            CommonConstants.START_OFFSET_CHARACTERS
+            KEY_START_OFFSET_CHARACTERS,
+            START_OFFSET_CHARACTERS
         )
         set(value) = preferences.edit()
-            .putInt(SettingsConstants.KEY_START_OFFSET_CHARACTERS, value)
+            .putInt(KEY_START_OFFSET_CHARACTERS, value)
             .apply()
 
     var limitComics: Int
         get() = preferences.getInt(
-            SettingsConstants.KEY_LIMIT_COMICS,
-            CommonConstants.LIMIT_COMICS
+            KEY_LIMIT_COMICS,
+            LIMIT_COMICS
         )
         set(value) = preferences.edit()
-            .putInt(SettingsConstants.KEY_LIMIT_COMICS, value)
+            .putInt(KEY_LIMIT_COMICS, value)
             .apply()
 
     var startOffsetComics: Int
         get() = preferences.getInt(
-            SettingsConstants.KEY_START_OFFSET_COMICS,
-            CommonConstants.START_OFFSET_COMICS
+            KEY_START_OFFSET_COMICS,
+            START_OFFSET_COMICS
         )
         set(value) = preferences.edit()
-            .putInt(SettingsConstants.KEY_START_OFFSET_COMICS, value)
+            .putInt(KEY_START_OFFSET_COMICS, value)
             .apply()
+
+    companion object {
+        private const val KEY_START_DESTINATION = "key_start_destination"
+        private const val KEY_LIMIT_CHARACTERS = "key_limit_characters"
+        private const val KEY_START_OFFSET_CHARACTERS = "key_start_offset_characters"
+        private const val KEY_LIMIT_COMICS = "key_limit_comics"
+        private const val KEY_START_OFFSET_COMICS = "key_start_offset_comics"
+
+        private const val LIMIT_CHARACTERS = 20
+        private const val START_OFFSET_CHARACTERS = 0
+        private const val LIMIT_COMICS = 20
+        private const val START_OFFSET_COMICS = 0
+    }
 }

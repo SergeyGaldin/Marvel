@@ -59,6 +59,7 @@ fun ComicsRoute(
             if (!comicsScreenState.comics.isNullOrEmpty() && !isRefreshing) ComicsContent(
                 comics = comicsScreenState.comics!!,
                 offset = comicsViewModel.offset.value,
+                limit = comicsViewModel.limit.value,
                 total = comicsScreenState.total ?: 0,
                 showOnlyFavoritesComics = comicsScreenState.isShowOnlyFavoritesComics,
                 onNextComics = comicsViewModel::nextComics,

@@ -20,14 +20,18 @@ class CharactersRepository @Inject constructor(
     private val marvelApi: MarvelApi,
     private val characterDao: CharacterDao
 ) {
-    suspend fun fetchCharacters(isGetLocalData: Boolean, offset: Int): CharactersData {
+    suspend fun fetchCharacters(
+        isGetLocalData: Boolean,
+        offset: Int,
+        limit: Int
+    ): CharactersData {
         val localCharacters = getLocalCharacters()
         if (isGetLocalData) return CharactersData(
             characters = localCharacters,
             total = localCharacters.size
         )
 
-        val remoteCharactersResult = getRemoteCharacters(offset)
+        val remoteCharactersResult = getRemoteCharacters(offset, limit)
 
         val remoteCharacters = when (remoteCharactersResult) {
             is ResultResponse.Success -> remoteCharactersResult.data?.results?.toMutableList()
@@ -63,8 +67,15 @@ class CharactersRepository @Inject constructor(
         )
     }
 
-    private suspend fun getRemoteCharacters(offset: Int) =
-        getDataFromNetwork<List<Character>> { marvelApi.getCharacters(offset = offset) }
+    private suspend fun getRemoteCharacters(
+        offset: Int,
+        limit: Int
+    ) = getDataFromNetwork<List<Character>> {
+        marvelApi.getCharacters(
+            limit = limit,
+            offset = offset
+        )
+    }
 
     private suspend fun getLocalCharacters() = withContext(Dispatchers.IO) {
         characterDao.getCharacters()

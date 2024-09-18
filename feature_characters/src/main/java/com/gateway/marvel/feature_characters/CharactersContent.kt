@@ -36,13 +36,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.gateway.marvel.core.dto.Character
 import com.gateway.marvel.core.mock.MockEntity
-import com.gateway.marvel.core.utils.CommonConstants
 import com.gateway.marvel.ui_kit.theme.MarvelTheme
 
 @Composable
 fun CharactersContent(
     characters: List<Character>,
     offset: Int,
+    limit: Int,
     total: Int,
     showOnlyFavoritesCharacters: Boolean,
     onNextCharacters: () -> Unit,
@@ -69,6 +69,7 @@ fun CharactersContent(
             total = total
         ) else PaginationLayout(
             offset = offset,
+            limit = limit,
             total = total,
             onNextCharacters = onNextCharacters,
             onPreviousCharacters = onPreviousCharacters
@@ -93,11 +94,12 @@ private fun LocalInfoLayout(
 @Composable
 private fun PaginationLayout(
     offset: Int,
+    limit: Int,
     total: Int,
     onNextCharacters: () -> Unit,
     onPreviousCharacters: () -> Unit,
 ) {
-    val offsetFinal = offset + CommonConstants.LIMIT_CHARACTERS
+    val offsetFinal = offset + limit
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -207,6 +209,7 @@ private fun PaginationLayoutPreview() {
     MarvelTheme {
         PaginationLayout(
             offset = 0,
+            limit = 20,
             total = 1574,
             onNextCharacters = {},
             onPreviousCharacters = {}

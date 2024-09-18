@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.core)
     implementation(projects.uiKit)
     implementation(projects.repoCharacters)
+    implementation(projects.localPreferences)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 }

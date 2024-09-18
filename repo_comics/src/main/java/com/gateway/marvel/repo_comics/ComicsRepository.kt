@@ -20,14 +20,18 @@ class ComicsRepository @Inject constructor(
     private val marvelApi: MarvelApi,
     private val comicDao: ComicDao
 ) {
-    suspend fun fetchComics(isGetLocalData: Boolean, offset: Int): ComicsData {
+    suspend fun fetchComics(
+        isGetLocalData: Boolean,
+        offset: Int,
+        limit: Int
+    ): ComicsData {
         val localComics = getLocalComics()
         if (isGetLocalData) return ComicsData(
             comics = localComics,
             total = localComics.size
         )
 
-        val remoteComicsResult = getRemoteComics(offset)
+        val remoteComicsResult = getRemoteComics(offset, limit)
 
         val remoteComics = when (remoteComicsResult) {
             is ResultResponse.Success -> remoteComicsResult.data?.results?.toMutableList()
@@ -63,8 +67,15 @@ class ComicsRepository @Inject constructor(
         )
     }
 
-    private suspend fun getRemoteComics(offset: Int) =
-        getDataFromNetwork<List<Comic>> { marvelApi.getComics(offset = offset) }
+    private suspend fun getRemoteComics(
+        offset: Int,
+        limit: Int
+    ) = getDataFromNetwork<List<Comic>> {
+        marvelApi.getComics(
+            limit = limit,
+            offset = offset
+        )
+    }
 
     private suspend fun getLocalComics() = withContext(Dispatchers.IO) {
         comicDao.getComics()

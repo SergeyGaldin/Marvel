@@ -59,6 +59,7 @@ fun CharactersRoute(
             if (!charactersScreenState.characters.isNullOrEmpty() && !isRefreshing) CharactersContent(
                 characters = charactersScreenState.characters!!,
                 offset = charactersViewModel.offset.value,
+                limit = charactersViewModel.limit.value,
                 total = charactersScreenState.total ?: 0,
                 showOnlyFavoritesCharacters = charactersScreenState.isShowOnlyFavoritesCharacters,
                 onNextCharacters = charactersViewModel::nextCharacters,

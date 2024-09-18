@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gateway.marvel.core.dto.Character
-import com.gateway.marvel.core.utils.CommonConstants
+import com.gateway.marvel.local_preferences.AppSettings
 import com.gateway.marvel.repo_characters.CharactersRepository
 import com.gateway.marvel.ui_kit.utils.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,20 +24,25 @@ data class CharactersScreenState(
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
-    private val charactersRepository: CharactersRepository
+    private val charactersRepository: CharactersRepository,
+    appSettings: AppSettings
 ) : ViewModel() {
     private val _charactersScreenState = mutableStateOf(CharactersScreenState())
     val charactersScreenState: State<CharactersScreenState> get() = _charactersScreenState
 
-    private val _offset = mutableIntStateOf(CommonConstants.START_OFFSET_CHARACTERS)
+    private val _offset = mutableIntStateOf(appSettings.startOffsetCharacters)
     val offset: State<Int> get() = _offset
+
+    private val _limit = mutableIntStateOf(appSettings.limitCharacters)
+    val limit: State<Int> get() = _limit
 
     suspend fun fetchCharacters() {
         _charactersScreenState.value = _charactersScreenState.value.copy(isRefreshing = true)
 
         val charactersData = charactersRepository.fetchCharacters(
             isGetLocalData = _charactersScreenState.value.isShowOnlyFavoritesCharacters,
-            offset = _offset.intValue
+            offset = _offset.intValue,
+            limit = _limit.intValue
         )
 
         _charactersScreenState.value = _charactersScreenState.value.copy(
@@ -74,12 +79,12 @@ class CharactersViewModel @Inject constructor(
     }
 
     fun nextCharacters() {
-        _offset.intValue += CommonConstants.LIMIT_CHARACTERS
+        _offset.intValue += _limit.intValue
         getCharacters()
     }
 
     fun previousCharacters() {
-        _offset.intValue -= CommonConstants.LIMIT_CHARACTERS
+        _offset.intValue -= _limit.intValue
         getCharacters()
     }
 
