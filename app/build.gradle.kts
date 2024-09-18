@@ -14,6 +14,8 @@ dependencies {
     implementation(projects.featureCharacters)
     implementation(projects.featureComics)
     implementation(projects.featureSettings)
+    implementation(projects.repoCharacters)
+    implementation(projects.repoComics)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
