@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gateway.marvel.ui_kit.components.AlertDialogExceptionInfo
+import com.gateway.marvel.ui_kit.components.DataEmptyLayout
 import com.gateway.marvel.ui_kit.components.showToastLong
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -55,24 +56,23 @@ fun ComicsRoute(
             isRefreshing = isRefreshing,
             onRefresh = onRefresh,
         ) {
-            println("${comicsScreenState.comics}")
-//            if (!comicsScreenState.characters.isNullOrEmpty() && !isRefreshing) CharactersContent(
-//                characters = comicsScreenState.characters!!,
-//                offset = charactersViewModel.offset.value,
-//                total = comicsScreenState.total ?: 0,
-//                showOnlyFavoritesCharacters = comicsScreenState.isShowOnlyFavoritesCharacters,
-//                onNextCharacters = charactersViewModel::nextCharacters,
-//                onPreviousCharacters = charactersViewModel::previousCharacters,
-//                onAddFavoriteCharacter = charactersViewModel::addFavoriteCharacter,
-//                onDeleteFavoriteCharacter = charactersViewModel::deleteFavoriteCharacter
-//            ) else if (comicsScreenState.characters.isNullOrEmpty() && !isRefreshing) {
-//                if (comicsScreenState.isShowOnlyFavoritesCharacters) DataEmptyLayout(
-//                    text = "Нет избранных персонажей"
-//                ) else DataEmptyLayout(
-//                    text = "Нет данных",
-//                    onRefresh = onRefresh
-//                )
-//            }
+            if (!comicsScreenState.comics.isNullOrEmpty() && !isRefreshing) ComicsContent(
+                comics = comicsScreenState.comics!!,
+                offset = comicsViewModel.offset.value,
+                total = comicsScreenState.total ?: 0,
+                showOnlyFavoritesComics = comicsScreenState.isShowOnlyFavoritesComics,
+                onNextComics = comicsViewModel::nextComics,
+                onPreviousComics = comicsViewModel::previousComics,
+                onAddFavoriteComic = comicsViewModel::addFavoriteComic,
+                onDeleteFavoriteComic = comicsViewModel::deleteFavoriteComic
+            ) else if (comicsScreenState.comics.isNullOrEmpty() && !isRefreshing) {
+                if (comicsScreenState.isShowOnlyFavoritesComics) DataEmptyLayout(
+                    text = "Нет избранных комиксов"
+                ) else DataEmptyLayout(
+                    text = "Нет данных",
+                    onRefresh = onRefresh
+                )
+            }
         }
     }
 

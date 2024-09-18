@@ -48,7 +48,7 @@ fun CharactersContent(
     onNextCharacters: () -> Unit,
     onPreviousCharacters: () -> Unit,
     onAddFavoriteCharacter: (Character) -> Unit,
-    onDeleteFavoriteCharacter: (Character) -> Unit,
+    onDeleteFavoriteCharacter: (Character) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         LazyVerticalGrid(

@@ -73,12 +73,12 @@ class ComicsViewModel @Inject constructor(
         }
     }
 
-    fun nextComic() {
+    fun nextComics() {
         _offset.intValue += CommonConstants.LIMIT_COMICS
         getComics()
     }
 
-    fun previousComic() {
+    fun previousComics() {
         _offset.intValue -= CommonConstants.LIMIT_COMICS
         getComics()
     }
