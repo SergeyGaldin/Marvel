@@ -33,6 +33,15 @@ class ApplicationConfigPlugin : Plugin<Project> {
         namespace = versionCatalog.findVersion("applicationId").get().toString()
         compileSdk = versionCatalog.findVersion("compileSdk").get().toString().toInt()
 
+        signingConfigs {
+            create("marvel release") {
+                storeFile = file("marvel_key.jks")
+                storePassword = "rootroot"
+                keyAlias = "marvel_key"
+                keyPassword = "rootroot"
+            }
+        }
+
         defaultConfig {
             applicationId = versionCatalog.findVersion("applicationId").get().toString()
 
@@ -44,11 +53,14 @@ class ApplicationConfigPlugin : Plugin<Project> {
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             vectorDrawables.useSupportLibrary = true
+
+            signingConfig = signingConfigs.getByName("marvel release")
         }
 
         buildTypes {
             getByName("release") {
-                isMinifyEnabled = false
+                isMinifyEnabled = true
+                isShrinkResources = true
                 proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"

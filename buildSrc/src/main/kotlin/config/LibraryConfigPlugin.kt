@@ -45,16 +45,12 @@ class LibraryConfigPlugin : Plugin<Project> {
             minSdk = versionCatalog.findVersion("minSdk").get().toString().toInt()
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            consumerProguardFiles("consumer-rules.pro")
         }
 
         buildTypes {
             getByName("release") {
                 isMinifyEnabled = false
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
+                proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
             }
         }
 
