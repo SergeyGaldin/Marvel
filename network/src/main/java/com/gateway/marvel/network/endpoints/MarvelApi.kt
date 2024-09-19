@@ -1,7 +1,7 @@
 package com.gateway.marvel.network.endpoints
 
-import com.gateway.marvel.core.dto.Character
-import com.gateway.marvel.core.dto.Comic
+import com.gateway.marvel.network.dto.CharacterNetwork
+import com.gateway.marvel.network.dto.ComicNetwork
 import com.gateway.marvel.network.dto.MarvelResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -12,11 +12,11 @@ interface MarvelApi {
     suspend fun getCharacters(
         @Query("limit") limit: Int,
         @Query("offset") offset: Int
-    ): Response<MarvelResponse<List<Character>>>
+    ): Response<MarvelResponse<List<CharacterNetwork>>>
 
     @GET("comics")
     suspend fun getComics(
         @Query("limit") limit: Int,
         @Query("offset") offset: Int
-    ): Response<MarvelResponse<List<Comic>>>
+    ): Response<MarvelResponse<List<ComicNetwork>>>
 }

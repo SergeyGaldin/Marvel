@@ -2,7 +2,10 @@ package com.gateway.marvel.repo_comics
 
 import com.gateway.marvel.core.dto.Comic
 import com.gateway.marvel.local_db.dao.ComicDao
+import com.gateway.marvel.local_db.mapper.ComicLocalMapper
+import com.gateway.marvel.network.dto.ComicNetwork
 import com.gateway.marvel.network.endpoints.MarvelApi
+import com.gateway.marvel.network.mapper.ComicNetworkMapper
 import com.gateway.marvel.network.utils.ResultResponse
 import com.gateway.marvel.network.utils.getDataFromNetwork
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +21,9 @@ data class ComicsData(
 
 class ComicsRepository @Inject constructor(
     private val marvelApi: MarvelApi,
-    private val comicDao: ComicDao
+    private val comicDao: ComicDao,
+    private val comicLocalMapper: ComicLocalMapper,
+    private val comicNetworkMapper: ComicNetworkMapper
 ) {
     suspend fun fetchComics(
         isGetLocalData: Boolean,
@@ -27,7 +32,7 @@ class ComicsRepository @Inject constructor(
     ): ComicsData {
         val localComics = getLocalComics()
         if (isGetLocalData) return ComicsData(
-            comics = localComics,
+            comics = comicLocalMapper.domainToAnotherMaps(localComics),
             total = localComics.size
         )
 
@@ -36,13 +41,17 @@ class ComicsRepository @Inject constructor(
         val remoteComics = when (remoteComicsResult) {
             is ResultResponse.Success -> remoteComicsResult.data?.results?.toMutableList()
             is ResultResponse.Error -> null
-        }?.map { remoteComic ->
-            val localComic = localComics.firstOrNull { localComic ->
-                remoteComic.id == localComic.id
-            }
-            remoteComic.isFavorite = localComic != null
-            remoteComic
         }
+
+        val comics = remoteComics
+            ?.let { comicNetworkMapper.domainToAnotherMaps(it) }
+            ?.map {
+                val localComic = localComics.firstOrNull { localComic ->
+                    it.id == localComic.id
+                }
+                it.isFavorite = localComic != null
+                it
+            }
 
         val remoteTotal = when (remoteComicsResult) {
             is ResultResponse.Success -> remoteComicsResult.data?.total
@@ -60,7 +69,7 @@ class ComicsRepository @Inject constructor(
         }
 
         return ComicsData(
-            comics = remoteComics,
+            comics = comics,
             total = remoteTotal,
             errorMessage = errorMessage,
             throwable = throwable
@@ -70,7 +79,7 @@ class ComicsRepository @Inject constructor(
     private suspend fun getRemoteComics(
         offset: Int,
         limit: Int
-    ) = getDataFromNetwork<List<Comic>> {
+    ) = getDataFromNetwork<List<ComicNetwork>> {
         marvelApi.getComics(
             limit = limit,
             offset = offset
@@ -83,11 +92,11 @@ class ComicsRepository @Inject constructor(
 
     suspend fun addFavoriteComic(comic: Comic) = withContext(Dispatchers.IO) {
         comic.isFavorite = true
-        comicDao.insert(comic)
+        comicDao.insert(comicLocalMapper.anotherToDomainMap(comic))
     }
 
     suspend fun deleteFavoriteComic(comic: Comic) = withContext(Dispatchers.IO) {
         comic.isFavorite = false
-        comicDao.delete(comic)
+        comicDao.delete(comicLocalMapper.anotherToDomainMap(comic))
     }
 }

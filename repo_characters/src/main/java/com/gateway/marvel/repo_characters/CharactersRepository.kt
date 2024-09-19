@@ -2,7 +2,10 @@ package com.gateway.marvel.repo_characters
 
 import com.gateway.marvel.core.dto.Character
 import com.gateway.marvel.local_db.dao.CharacterDao
+import com.gateway.marvel.local_db.mapper.CharacterLocalMapper
+import com.gateway.marvel.network.dto.CharacterNetwork
 import com.gateway.marvel.network.endpoints.MarvelApi
+import com.gateway.marvel.network.mapper.CharacterNetworkMapper
 import com.gateway.marvel.network.utils.ResultResponse
 import com.gateway.marvel.network.utils.getDataFromNetwork
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +21,9 @@ data class CharactersData(
 
 class CharactersRepository @Inject constructor(
     private val marvelApi: MarvelApi,
-    private val characterDao: CharacterDao
+    private val characterDao: CharacterDao,
+    private val characterLocalMapper: CharacterLocalMapper,
+    private val characterNetworkMapper: CharacterNetworkMapper
 ) {
     suspend fun fetchCharacters(
         isGetLocalData: Boolean,
@@ -27,7 +32,7 @@ class CharactersRepository @Inject constructor(
     ): CharactersData {
         val localCharacters = getLocalCharacters()
         if (isGetLocalData) return CharactersData(
-            characters = localCharacters,
+            characters = characterLocalMapper.domainToAnotherMaps(localCharacters),
             total = localCharacters.size
         )
 
@@ -36,13 +41,17 @@ class CharactersRepository @Inject constructor(
         val remoteCharacters = when (remoteCharactersResult) {
             is ResultResponse.Success -> remoteCharactersResult.data?.results?.toMutableList()
             is ResultResponse.Error -> null
-        }?.map { remoteCharacter ->
-            val localCharacter = localCharacters.firstOrNull { localCharacter ->
-                remoteCharacter.id == localCharacter.id
-            }
-            remoteCharacter.isFavorite = localCharacter != null
-            remoteCharacter
         }
+
+        val characters = remoteCharacters
+            ?.let { characterNetworkMapper.domainToAnotherMaps(it) }
+            ?.map {
+                val localCharacter = localCharacters.firstOrNull { localCharacter ->
+                    it.id == localCharacter.id
+                }
+                it.isFavorite = localCharacter != null
+                it
+            }
 
         val remoteTotal = when (remoteCharactersResult) {
             is ResultResponse.Success -> remoteCharactersResult.data?.total
@@ -60,7 +69,7 @@ class CharactersRepository @Inject constructor(
         }
 
         return CharactersData(
-            characters = remoteCharacters,
+            characters = characters,
             total = remoteTotal,
             errorMessage = errorMessage,
             throwable = throwable
@@ -70,7 +79,7 @@ class CharactersRepository @Inject constructor(
     private suspend fun getRemoteCharacters(
         offset: Int,
         limit: Int
-    ) = getDataFromNetwork<List<Character>> {
+    ) = getDataFromNetwork<List<CharacterNetwork>> {
         marvelApi.getCharacters(
             limit = limit,
             offset = offset
@@ -83,11 +92,11 @@ class CharactersRepository @Inject constructor(
 
     suspend fun addFavoriteCharacter(character: Character) = withContext(Dispatchers.IO) {
         character.isFavorite = true
-        characterDao.insert(character)
+        characterDao.insert(characterLocalMapper.anotherToDomainMap(character))
     }
 
     suspend fun deleteFavoriteCharacter(character: Character) = withContext(Dispatchers.IO) {
         character.isFavorite = false
-        characterDao.delete(character)
+        characterDao.delete(characterLocalMapper.anotherToDomainMap(character))
     }
 }

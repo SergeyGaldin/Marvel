@@ -4,5 +4,4 @@
 -keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
 -keepattributes AnnotationDefault
 
--keep class com.gateway.marvel.core.dto**{ *; }
 -keep class com.gateway.marvel.network.dto**{ *; }

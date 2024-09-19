@@ -5,16 +5,16 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.gateway.marvel.core.dto.Comic
+import com.gateway.marvel.local_db.dto.ComicLocal
 
 @Dao
 interface ComicDao {
     @Query("SELECT * FROM Comic")
-    suspend fun getComics(): List<Comic>
+    suspend fun getComics(): List<ComicLocal>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(comic: Comic)
+    suspend fun insert(comic: ComicLocal)
 
     @Delete
-    suspend fun delete(comic: Comic)
+    suspend fun delete(comic: ComicLocal)
 }

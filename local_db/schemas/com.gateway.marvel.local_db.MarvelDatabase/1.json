@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e7e65b780966da9bfb6a4e21fe3053cb",
+    "identityHash": "3d954867098cb42781c5b86f34e567d5",
     "entities": [
       {
-        "tableName": "Character",
+        "tableName": "character",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `thumbnail` TEXT NOT NULL, `isFavorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -43,7 +43,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Comic",
+        "tableName": "comic",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `thumbnail` TEXT NOT NULL, `isFavorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -84,7 +84,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e7e65b780966da9bfb6a4e21fe3053cb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3d954867098cb42781c5b86f34e567d5')"
     ]
   }
 }
