@@ -6,9 +6,9 @@
 
 # Скриншоты
 <p align="center">
-  <img src="screenshots/characters_screenshots.jpg" alt="Экран персонажей" width="300">
-  <img src="screenshots/comics_screenshots.jpg" alt="Экран комиксов" width="300">
-  <img src="screenshots/settings_screenshots.jpg" alt="Экран настроек" width="300">
+  <img src="screenshots/characters_screenshots.jpg" alt="Экран персонажей" width="250">
+  <img src="screenshots/comics_screenshots.jpg" alt="Экран комиксов" width="250">
+  <img src="screenshots/settings_screenshots.jpg" alt="Экран настроек" width="250">
 </p>
 
 # Возможности
