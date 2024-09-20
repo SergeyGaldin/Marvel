@@ -3,11 +3,11 @@ package com.gateway.marvel.main
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import com.gateway.marvel.core.navigation.MainScreenContent
 import com.gateway.marvel.feature_characters.CharactersRoute
 import com.gateway.marvel.feature_comics.ComicsRoute
 import com.gateway.marvel.feature_settings.SettingsRoute
+import com.gateway.marvel.main.utils.composableWithAnimations
 
 @Composable
 fun MainContentNavGraph(
@@ -18,30 +18,22 @@ fun MainContentNavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(MainScreenContent.Characters.route) {
+        composableWithAnimations(MainScreenContent.Characters.route) {
             CharactersRoute(
                 nameScreen = MainScreenContent.Characters.nameScreen
             )
         }
 
-        composable(MainScreenContent.Comics.route) {
+        composableWithAnimations(MainScreenContent.Comics.route) {
             ComicsRoute(
                 nameScreen = MainScreenContent.Comics.nameScreen
             )
         }
 
-        composable(MainScreenContent.Settings.route) {
+        composableWithAnimations(MainScreenContent.Settings.route) {
             SettingsRoute(
                 nameScreen = MainScreenContent.Settings.nameScreen
             )
         }
     }
-}
-
-fun conditionSwitchScreen(
-    navController: NavHostController,
-    currentRoute: String?,
-    selectRoute: String
-) {
-    if (currentRoute != selectRoute) navController.navigate(selectRoute) { popUpTo(0) }
 }

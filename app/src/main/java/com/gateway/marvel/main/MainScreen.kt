@@ -24,7 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +33,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gateway.marvel.core.navigation.DestinationMainContent
 import com.gateway.marvel.core.navigation.MainScreenContent
+import com.gateway.marvel.main.utils.BottomNavigationItem
+import com.gateway.marvel.main.utils.conditionSwitchScreen
 import com.gateway.marvel.ui_kit.theme.MarvelTheme
 
 @Preview(name = "Main light theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
@@ -47,13 +48,7 @@ private fun MainScreenPreview() {
     }
 }
 
-data class BottomNavigationItem(
-    val mainScreenContent: MainScreenContent,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-)
-
-val bottomNavigationItems = listOf(
+private val bottomNavigationItems = listOf(
     BottomNavigationItem(
         mainScreenContent = MainScreenContent.Characters,
         selectedIcon = Icons.Filled.SupervisedUserCircle,
