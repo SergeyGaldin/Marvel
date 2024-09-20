@@ -32,3 +32,6 @@
 - **Retrofit + Gson для сетевого взаимодействия**.
 - **Room для локальной базы данных**.
 - **JUnit и Mockito для тестирования**.
+
+# REST API
+https://developer.marvel.com/docs
