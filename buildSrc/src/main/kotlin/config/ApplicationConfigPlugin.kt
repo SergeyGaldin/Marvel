@@ -51,7 +51,7 @@ class ApplicationConfigPlugin : Plugin<Project> {
             versionCode = versionCatalog.findVersion("versionCode").get().toString().toInt()
             versionName = versionCatalog.findVersion("versionName").get().toString()
 
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+            testInstrumentationRunner = "com.gateway.marvel.CustomTestRunner"
             vectorDrawables.useSupportLibrary = true
 
             signingConfig = signingConfigs.getByName("marvel release")
