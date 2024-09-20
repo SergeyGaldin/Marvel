@@ -6,8 +6,8 @@ import com.gateway.marvel.core.dto.Thumbnail
 
 object MockEntity  {
     fun mockThumbnail() = Thumbnail(
-        path = "",
-        extension = ""
+        path = "http://icon",
+        extension = "jpg"
     )
 
     fun mockCharacter() = Character(
