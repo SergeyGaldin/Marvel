@@ -1,7 +1,9 @@
 package com.gateway.marvel
 
+import com.gateway.marvel.core.dto.Character
 import com.gateway.marvel.core.mock.MockEntity
 import com.gateway.marvel.local_db.dao.CharacterDao
+import com.gateway.marvel.local_db.dto.CharacterLocal
 import com.gateway.marvel.local_db.mapper.CharacterLocalMapper
 import com.gateway.marvel.network.dto.CharacterNetwork
 import com.gateway.marvel.network.dto.DataContainer
@@ -31,6 +33,9 @@ class CharactersRepositoryTest {
     private lateinit var marvelApi: MarvelApi
     private lateinit var characterDao: CharacterDao
 
+    private val offset = 0
+    private val limit = 20
+
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
@@ -46,16 +51,25 @@ class CharactersRepositoryTest {
         )
     }
 
+    private fun prepareMockCharacter(): Character = MockEntity.mockCharacter()
+
+    private fun prepareMockLocalCharacter(
+        character: Character = prepareMockCharacter()
+    ): CharacterLocal = CharacterLocalMapper().anotherToDomainMap(character)
+
+    private fun prepareMockNetworkCharacter(
+        character: Character = prepareMockCharacter()
+    ): CharacterNetwork = CharacterNetworkMapper().anotherToDomainMap(character)
+
     @Test
     fun `fetchCharacters should return local data when isGetLocalData is true`() = runBlocking {
         // Arrange
-        val mockCharacter = MockEntity.mockCharacter()
-        val localCharacters = listOf(CharacterLocalMapper().anotherToDomainMap(mockCharacter))
+        val localCharacters = listOf(prepareMockLocalCharacter())
 
         whenever(characterDao.getCharacters()).thenReturn(localCharacters)
 
         // Act
-        val result = charactersRepository.fetchCharacters(true, 0, 20)
+        val result = charactersRepository.fetchCharacters(true, offset, limit)
 
         // Assert
         assertNotNull(result.characters)
@@ -66,32 +80,26 @@ class CharactersRepositoryTest {
     fun `fetchCharacters returns characters on successful API call when isGetLocalData is false`() =
         runBlocking {
             // Arrange
-            val offset = 0
-            val limit = 20
-            val mockCharacter = MockEntity.mockCharacter()
-            val localCharacters = listOf(CharacterLocalMapper().anotherToDomainMap(mockCharacter))
-            val networkCharacters = listOf(
-                CharacterNetworkMapper()
-                    .anotherToDomainMap(mockCharacter)
-            )
+            val characters = listOf(prepareMockCharacter())
+            val localCharacters = listOf(prepareMockLocalCharacter())
+            val networkCharacters = listOf(prepareMockNetworkCharacter())
             val marvelDataResponse = DataContainer(1, networkCharacters)
             val marvelResponse = MarvelResponse(marvelDataResponse)
+            val response = Response.success(marvelResponse)
 
             whenever(characterDao.getCharacters()).thenReturn(localCharacters)
 
-            val response = Response.success(marvelResponse)
             whenever(marvelApi.getCharacters(limit, offset)).thenReturn(response)
 
-            val mappedCharacters = listOf(mockCharacter)
             whenever(characterNetworkMapper.domainToAnotherMaps(networkCharacters))
-                .thenReturn(mappedCharacters)
+                .thenReturn(characters)
 
             // Act
             val result = charactersRepository.fetchCharacters(false, offset, limit)
 
             // Assert
             assertNotNull(result)
-            assertEquals(mappedCharacters, result.characters)
+            assertEquals(characters, result.characters)
             assertEquals(1, result.total)
             assertNull(result.errorMessage)
             assertNull(result.throwable)
@@ -101,9 +109,6 @@ class CharactersRepositoryTest {
     fun `fetchCharacters returns error when API call fails when isGetLocalData is false`() =
         runBlocking {
             // Arrange
-            val offset = 0
-            val limit = 20
-
             whenever(characterDao.getCharacters()).thenReturn(emptyList())
 
             val errorJson = """{"message": "Bad Request", "code": 400}"""
@@ -128,12 +133,9 @@ class CharactersRepositoryTest {
     fun `fetchCharacters returns throwable when API call throws exception when isGetLocalData is false`() =
         runBlocking {
             // Arrange
-            val offset = 0
-            val limit = 20
-
             whenever(characterDao.getCharacters()).thenReturn(emptyList())
 
-            val exception = RuntimeException("Network error")
+            val exception = RuntimeException("RuntimeException")
             whenever(marvelApi.getCharacters(limit, offset)).thenThrow(exception)
 
             // Act
@@ -150,30 +152,30 @@ class CharactersRepositoryTest {
     @Test
     fun `addFavoriteCharacter should insert character into database`() = runTest {
         // Arrange
-        val mockCharacter = MockEntity.mockCharacter()
-        val mappedCharacter = CharacterLocalMapper().anotherToDomainMap(mockCharacter)
+        val character = prepareMockCharacter()
+        val localCharacter = prepareMockLocalCharacter()
 
-        whenever(characterLocalMapper.anotherToDomainMap(mockCharacter)).thenReturn(mappedCharacter)
+        whenever(characterLocalMapper.anotherToDomainMap(character)).thenReturn(localCharacter)
 
         // Act
-        charactersRepository.addFavoriteCharacter(mockCharacter)
+        charactersRepository.addFavoriteCharacter(character)
 
         // Assert
-        verify(characterDao).insert(mappedCharacter)
+        verify(characterDao).insert(localCharacter)
     }
 
     @Test
     fun `deleteFavoriteCharacter should remove character from database`() = runTest {
         // Arrange
-        val mockCharacter = MockEntity.mockCharacter()
-        val mappedCharacter = CharacterLocalMapper().anotherToDomainMap(mockCharacter)
+        val character = prepareMockCharacter()
+        val localCharacter = prepareMockLocalCharacter()
 
-        whenever(characterLocalMapper.anotherToDomainMap(mockCharacter)).thenReturn(mappedCharacter)
+        whenever(characterLocalMapper.anotherToDomainMap(character)).thenReturn(localCharacter)
 
         // Act
-        charactersRepository.deleteFavoriteCharacter(mockCharacter)
+        charactersRepository.deleteFavoriteCharacter(character)
 
         // Assert
-        verify(characterDao).delete(mappedCharacter)
+        verify(characterDao).delete(localCharacter)
     }
 }
