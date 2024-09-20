@@ -1,7 +1,8 @@
 <div align="center">
   <img src="ui_kit/src/main/res/mipmap/ic_app.webp" alt="Логотип" width="200">
   
-  Marvel
+  <h3>Marvel</h3>
+  <h5>Просмотр списка персонажей и комиксов marvel</h5>
 </div>
 
 # Скриншоты
