@@ -37,3 +37,6 @@
 
 # REST API
 https://developer.marvel.com/docs
+
+# Связи между модулями
+<img src="screenshots/module_connections.png" alt="Связи между модулями">
