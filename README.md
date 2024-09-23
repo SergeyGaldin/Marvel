@@ -25,7 +25,7 @@
 - **Многомодульность**.
 - **Single Activity Application паттерн**.
 - **UI на Jetpack Compose**.
-- **Навигация с использованием библиотеки Navigation Component**.
+- **Для навигации используется Navigation Compose**.
 - **Архитектура презентационного слоя MVVM (ViewModel + StateFlow)**.
 - **Hilt в качестве DI для организации архитектуры приложения**.
 - **Kotlin Coroutines для асинхронных операций**.
