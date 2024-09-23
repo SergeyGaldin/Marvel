@@ -38,5 +38,8 @@
 # REST API
 https://developer.marvel.com/docs
 
+# Презентация
+https://docs.google.com/presentation/d/1D_3fEmVQd_ftNcov_UpLu-sdA8UcAb6ePYc2qf8tYPM/edit?usp=sharing
+
 # Связи между модулями
 <img src="screenshots/module_connections.png" alt="Связи между модулями">
