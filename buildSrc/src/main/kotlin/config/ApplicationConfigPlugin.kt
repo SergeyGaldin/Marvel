@@ -54,12 +54,12 @@ class ApplicationConfigPlugin : Plugin<Project> {
             testInstrumentationRunner = "com.gateway.marvel.CustomTestRunner"
             vectorDrawables.useSupportLibrary = true
 
-            signingConfig = signingConfigs.getByName("marvel release")
             resourceConfigurations += listOf("ru")
         }
 
         buildTypes {
             getByName("release") {
+                signingConfig = signingConfigs.getByName("marvel release")
                 isMinifyEnabled = true
                 isShrinkResources = true
                 proguardFiles(
